@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="bottom_item_text_color" format="color" />
+    <attr name="movie_list_background" format="color" />
+    <attr name="movie_item_title" format="color" />
+    <attr name="icon_tint" format="color"/>
+</resources>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.person.PersonFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/personImage"
+            android:layout_width="155dp"
+            android:layout_height="230dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:background="@color/cardview_dark_background"
+            android:src="@drawable/ic_launcher_foreground"
+            app:layout_constraintBottom_toTopOf="@id/personBiography"
+            app:layout_constraintEnd_toStartOf="@id/personName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/personName"
+            style="@style/Theme.TheMobileMovieDatabase.TextView.Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Person name"
+            app:layout_constraintBottom_toTopOf="@id/personBornLabel"
+            app:layout_constraintStart_toEndOf="@id/personImage"
+            app:layout_constraintTop_toTopOf="@id/personImage" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/personBiography"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:ellipsize="end"
+            android:maxLines="7"
+            android:text="Person biography"
+            app:layout_constraintBottom_toTopOf="@id/personFilmographyLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/personImage" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/Theme.TheMobileMovieDatabase.TextView.InformationText"
+            android:id="@+id/personBornLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/born_label"
+            app:layout_constraintBottom_toTopOf="@id/personDiedLabel"
+            app:layout_constraintEnd_toStartOf="@id/personBirthday"
+            app:layout_constraintStart_toStartOf="@id/personName"
+            app:layout_constraintTop_toBottomOf="@id/personName" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/personBirthday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="Oct. 23, 1986"
+            app:layout_constraintBottom_toBottomOf="@id/personBornLabel"
+            app:layout_constraintStart_toEndOf="@id/personBornLabel"
+            app:layout_constraintTop_toTopOf="@id/personBornLabel" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/personDiedLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Theme.TheMobileMovieDatabase.TextView.InformationText"
+            android:text="@string/died_label"
+            app:layout_constraintBottom_toTopOf="@id/personPlaceBirthLabel"
+            app:layout_constraintEnd_toStartOf="@id/personDeathDay"
+            app:layout_constraintStart_toStartOf="@id/personBornLabel"
+            app:layout_constraintTop_toBottomOf="@id/personBornLabel" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/personDeathDay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="Oct. 23, 1986"
+            app:layout_constraintBottom_toBottomOf="@id/personDiedLabel"
+            app:layout_constraintStart_toEndOf="@id/personDiedLabel"
+            app:layout_constraintTop_toTopOf="@id/personDiedLabel" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/personFilmographyLabel"
+            style="@style/Theme.TheMobileMovieDatabase.TextView.Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filmography_label"
+            app:layout_constraintBottom_toTopOf="@id/personFilmographyList"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/personBiography" />
+
+        <include
+            android:id="@+id/personFilmographyList"
+            layout="@layout/movie_poster_list"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/personPhotosLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/personFilmographyLabel" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/personFilmographyDirection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:text="@string/see_all_label"
+            android:textAllCaps="true"
+            android:textColor="#1e77fc"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="@id/personFilmographyLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/personFilmographyLabel" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/personPhotosLabel"
+            style="@style/Theme.TheMobileMovieDatabase.TextView.Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Photos"
+            app:layout_constraintBottom_toTopOf="@id/imagePostersList"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/personFilmographyList" />
+
+        <include
+            android:id="@+id/imagePostersList"
+            layout="@layout/image_list"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/personPhotosLabel" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/Theme.TheMobileMovieDatabase.TextView.InformationText"
+            android:id="@+id/personPlaceBirthLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/place_birth_label"
+            app:layout_constraintBottom_toTopOf="@id/personPlaceBirth"
+            app:layout_constraintStart_toStartOf="@id/personDiedLabel"
+            app:layout_constraintTop_toBottomOf="@id/personDiedLabel" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/personPlaceBirth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="London, England, UK"
+            app:layout_constraintStart_toStartOf="@id/personPlaceBirthLabel"
+            app:layout_constraintTop_toBottomOf="@id/personPlaceBirthLabel" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.profile.ProfileFragment">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/settingsMenuButton"
+        style="@style/Theme.TheMobileMovieDatabase.Button.Setting"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_label"
+
+        app:layout_constraintBottom_toTopOf="@id/bugReportMenuButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bugReportMenuButton"
+        style="@style/Theme.TheMobileMovieDatabase.Button.Setting"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/bug_report_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/settingsMenuButton"
+        app:layout_constraintBottom_toTopOf="@id/sourceCodeMenuButton"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/sourceCodeMenuButton"
+        style="@style/Theme.TheMobileMovieDatabase.Button.Setting"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/source_code_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bugReportMenuButton" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    android:label="Movie details"
+    app:startDestination="@id/home_screen">
+
+    <fragment
+        android:id="@+id/home_screen"
+        android:name="com.example.themobilemoviedatabase.ui.home.HomeFragment"
+        android:label="@string/home_label"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_home_screen_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favorite_screen"
+        android:name="com.example.themobilemoviedatabase.ui.favorite.FavoriteFragment"
+        android:label="@string/favorite_label"
+        tools:layout="@layout/fragment_favorite">
+        <action
+            android:id="@+id/action_favorite_screen_to_detailFragment"
+            app:destination="@id/detailFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/search_screen"
+        android:name="com.example.themobilemoviedatabase.ui.search.SearchFragment"
+        android:label="@string/search_label"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_search_screen_to_detailFragment"
+            app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_search_screen_to_castFragment"
+            app:destination="@id/castFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settings_screen"
+        android:name="com.example.themobilemoviedatabase.ui.settings.SettingsFragment"
+        android:label="@string/settings_label">
+        <action
+            android:id="@+id/action_settings_screen_to_profile_screen"
+            app:destination="@id/profile_screen"
+            app:popUpTo="@id/profile_screen"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/profile_screen"
+        android:name="com.example.themobilemoviedatabase.ui.profile.ProfileFragment"
+        android:label="@string/profile_label"
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profile_screen_to_settings_screen"
+            app:destination="@id/settings_screen" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.example.themobilemoviedatabase.ui.details.DetailMovieFragment"
+        android:label="@string/empty_label"
+        tools:layout="@layout/fragment_detail_movie">
+        <action
+            android:id="@+id/action_detailFragment_to_favorite_screen"
+            app:destination="@id/favorite_screen"
+            app:popUpTo="@id/favorite_screen"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_detailFragment_to_reviewFragment"
+            app:destination="@id/reviewFragment" />
+        <action
+            android:id="@+id/action_detailFragment_to_castFragment"
+            app:destination="@id/castFragment" />
+        <action
+            android:id="@+id/action_detailFragment_to_tvSeasonFragment"
+            app:destination="@id/tvSeasonFragment" />
+        <action
+            android:id="@+id/action_detailFragment_self"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/castFragment"
+        android:name="com.example.themobilemoviedatabase.ui.person.PersonFragment"
+        android:label="@string/empty_label"
+        tools:layout="@layout/fragment_person" >
+        <action
+            android:id="@+id/action_castFragment_to_detailFragment2"
+            app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_castFragment_to_personFilmographyFragment"
+            app:destination="@id/personFilmographyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/reviewFragment"
+        android:name="com.example.themobilemoviedatabase.ui.review.ReviewFragment"
+        android:label="@string/review_label"
+        tools:layout="@layout/fragment_review" />
+    <fragment
+        android:id="@+id/tvSeasonFragment"
+        android:name="com.example.themobilemoviedatabase.ui.seasons.TvSeasonFragment"
+        android:label="fragment_tv_season"
+        tools:layout="@layout/fragment_tv_season" >
+        <action
+            android:id="@+id/action_tvSeasonFragment_to_tvEpisodeFragment"
+            app:destination="@id/tvEpisodeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tvEpisodeFragment"
+        android:name="com.example.themobilemoviedatabase.ui.episodes.TvEpisodeFragment"
+        android:label="fragment_tv_episode"
+        tools:layout="@layout/fragment_tv_episode" >
+        <action
+            android:id="@+id/action_tvEpisodeFragment_to_episodeDetailFragment"
+            app:destination="@id/episodeDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/episodeDetailFragment"
+        android:name="com.example.themobilemoviedatabase.ui.episodes.detail.TvEpisodeDetailFragment"
+        android:label="fragment_episode_detail"
+        tools:layout="@layout/fragment_tv_episode_detail" >
+        <action
+            android:id="@+id/action_episodeDetailFragment_to_castFragment"
+            app:destination="@id/castFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/personFilmographyFragment"
+        android:name="com.example.themobilemoviedatabase.ui.person.filmography.PersonFilmographyFragment"
+        android:label="fragment_person_filmography"
+        tools:layout="@layout/fragment_person_filmography" >
+        <action
+            android:id="@+id/action_personFilmographyFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+</navigation>
