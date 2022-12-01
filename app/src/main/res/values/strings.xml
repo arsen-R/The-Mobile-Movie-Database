@@ -9,6 +9,8 @@
     <string name="settings_label">Settings</string>
     <string name="empty_label" />
     <string name="review_label">User reviews</string>
+    <string name="season_label">Seasons</string>
+    <string name="episode_label">Episodes</string>
 
     <!-- Preference Category Titles -->
     <string name="display_header">Display</string>
@@ -30,12 +32,12 @@
 
     <string name="recent_searches_label">Recent Searches</string>
 
-    <string name="trending_movies">Trending Movies</string>
+    <string name="trending_movies">Top Rated Movies</string>
     <string name="popular_movies">Popular Movies</string>
     <string name="now_playing_movie">Now Playing Movies</string>
     <string name="upcoming_movies">Upcoming Movies</string>
 
-    <string name="trending_tv_shows">Trending TV Shows</string>
+    <string name="trending_tv_shows">Top Rated TV Shows</string>
     <string name="popular_tv_shows">Popular TV Shows</string>
     <string name="on_tv_show">On TV Shows</string>
     <string name="airing_tv_show">Airing Today TV Shows</string>
@@ -52,6 +54,12 @@
     <string name="place_birth_label">Place of Birth:</string>
 
     <string name="see_all_label">See All</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="no_connection_error">A data connection is not currently allowed.</string>
+
+    <string name="season_number">Season 1</string>
+    <string name="air_date_episode_count">%1$s | %2$s</string>
+    <string name="empty_season_description">Season %1$d premiered on %2$s.</string>
+
+    <string name="episode_name">%1$d - %2$s</string>
+    <string name="empty_episode_description">Episode %1$d premiered on %2$s.</string>
 </resources>

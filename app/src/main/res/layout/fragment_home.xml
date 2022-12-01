@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,251 +7,49 @@
     android:fitsSystemWindows="true"
     tools:context=".ui.home.HomeFragment">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/homeList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/poster_list" />
 
-        <androidx.appcompat.widget.Toolbar
-            style="@style/Theme.TheMobileMovieDatabase.Toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:title="@string/app_name" />
-    </com.google.android.material.appbar.AppBarLayout>
+    <ProgressBar
+        android:id="@+id/progress_circular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nestedScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/errorMessageImage"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@drawable/error_image"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/posterBackground"
-                android:layout_width="0dp"
-                android:layout_height="450dp"
-                android:fitsSystemWindows="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_launcher_background"
-                app:layout_constraintBottom_toTopOf="@+id/trendingMovieLabel"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/errorMessageText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_connection_error"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/errorMessageImage" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:background="@drawable/shadow"
-                app:layout_constraintBottom_toBottomOf="@id/posterBackground"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatToggleButton
-                style="@style/Theme.TheMobileMovieDatabase.Button.Menu"
-                android:id="@+id/favoriteButton"
-                android:layout_height="wrap_content"
-                android:drawableTop="@drawable/ic_round_favorite_border_24"
-                android:drawableTint="@color/white"
-                android:textSize="13sp"
-                android:textColor="@color/white"
-                android:textOff="Favorite"
-                android:textOn="Favorite"
-                app:layout_collapseMode="pin"
-                app:layout_constraintBottom_toBottomOf="@id/movieNameText"
-                app:layout_constraintEnd_toStartOf="@id/movieNameText"
-                app:layout_constraintStart_toStartOf="@+id/posterBackground"
-                app:layout_constraintTop_toTopOf="@id/movieNameText" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/movieNameText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="25dp"
-                android:text="Title"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="@id/posterBackground"
-                app:layout_constraintEnd_toStartOf="@id/detailsInfoButton"
-                app:layout_constraintStart_toEndOf="@id/favoriteButton" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                style="@style/Theme.TheMobileMovieDatabase.Button.Menu"
-                android:id="@+id/detailsInfoButton"
-                android:layout_height="wrap_content"
-                android:background="@drawable/click_effect"
-                android:textSize="13sp"
-                android:drawableTop="@drawable/ic_outline_info_24"
-                android:text="Info"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="@id/movieNameText"
-                app:layout_constraintEnd_toEndOf="@id/posterBackground"
-                app:layout_constraintStart_toEndOf="@id/movieNameText"
-                app:layout_constraintTop_toTopOf="@id/movieNameText" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/trendingMovieLabel"
-                style="@style/Theme.TheMobileMovieDatabase.TextView.Label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/trending_movies"
-                app:layout_constraintBottom_toTopOf="@id/personFilmographyList"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/posterBackground" />
-
-            <include
-                android:id="@+id/personFilmographyList"
-                layout="@layout/movie_poster_list"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@id/popularMovieLabel"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/trendingMovieLabel" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/popularMovieLabel"
-                style="@style/Theme.TheMobileMovieDatabase.TextView.Label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/popular_movies"
-                app:layout_constraintBottom_toTopOf="@id/popularMovieList"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/personFilmographyList" />
-
-            <include
-                android:id="@+id/popularMovieList"
-                layout="@layout/movie_poster_list"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@id/nowPlayingMovieLabel"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/popularMovieLabel" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/nowPlayingMovieLabel"
-                style="@style/Theme.TheMobileMovieDatabase.TextView.Label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/now_playing_movie"
-                app:layout_constraintBottom_toTopOf="@id/nowPlayingMovieList"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/popularMovieList" />
-
-            <include
-                android:id="@+id/nowPlayingMovieList"
-                layout="@layout/movie_poster_list"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@id/upcomingMovieLabel"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/nowPlayingMovieLabel" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/upcomingMovieLabel"
-                style="@style/Theme.TheMobileMovieDatabase.TextView.Label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/upcoming_movies"
-                app:layout_constraintBottom_toTopOf="@id/upcomingMovieList"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/nowPlayingMovieList" />
-
-            <include
-                android:id="@+id/upcomingMovieList"
-                layout="@layout/movie_poster_list"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@id/trendingTvShowLabel"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/upcomingMovieLabel" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/trendingTvShowLabel"
-                style="@style/Theme.TheMobileMovieDatabase.TextView.Label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/trending_tv_shows"
-                app:layout_constraintBottom_toTopOf="@id/trendingTVShowList"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/upcomingMovieList" />
-
-            <include
-                android:id="@+id/trendingTVShowList"
-                layout="@layout/movie_poster_list"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@id/popularTvShowLabel"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/trendingTvShowLabel" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/popularTvShowLabel"
-                style="@style/Theme.TheMobileMovieDatabase.TextView.Label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/popular_tv_shows"
-                app:layout_constraintBottom_toTopOf="@id/popularTVShowList"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/trendingTVShowList" />
-
-            <include
-                android:id="@+id/popularTVShowList"
-                layout="@layout/movie_poster_list"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@id/onTvShowLabel"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/popularTvShowLabel" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/onTvShowLabel"
-                style="@style/Theme.TheMobileMovieDatabase.TextView.Label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/on_tv_show"
-                app:layout_constraintBottom_toTopOf="@id/onTVShowList"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/popularTVShowList" />
-
-            <include
-                android:id="@+id/onTVShowList"
-                layout="@layout/movie_poster_list"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@id/airingTodayTvShowLabel"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/onTvShowLabel" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/airingTodayTvShowLabel"
-                style="@style/Theme.TheMobileMovieDatabase.TextView.Label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/airing_tv_show"
-                app:layout_constraintBottom_toTopOf="@id/airingTodayTVShowList"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/onTVShowList" />
-
-            <include
-                android:id="@+id/airingTodayTVShowList"
-                layout="@layout/movie_poster_list"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/airingTodayTvShowLabel" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

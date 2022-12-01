@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Theme.TheMobileMovieDatabase.CardView"
+    android:id="@+id/seasonCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -12,15 +13,14 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/tvShowPoster"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="105dp"
+            android:layout_height="155dp"
             android:adjustViewBounds="true"
             android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:maxWidth="103dp"
-            android:maxHeight="155dp"
+            android:layout_marginEnd="10dp"
+            android:background="@color/grey"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/seasonName"
+            app:layout_constraintEnd_toStartOf="@id/tvSeasonDescription"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,9 +29,9 @@
             android:id="@+id/seasonName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Season 8"
+            android:text="@string/season_number"
             app:layout_constraintBottom_toTopOf="@id/airDateEpisodeCount"
-            app:layout_constraintStart_toEndOf="@id/tvShowPoster"
+            app:layout_constraintStart_toStartOf="@id/airDateEpisodeCount"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -41,7 +41,7 @@
             android:text="2019 | 6 episode"
             android:textSize="13sp"
             app:layout_constraintBottom_toTopOf="@id/tvSeasonDescription"
-            app:layout_constraintStart_toStartOf="@id/seasonName"
+            app:layout_constraintStart_toStartOf="@id/tvSeasonDescription"
             app:layout_constraintTop_toBottomOf="@id/seasonName" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -49,11 +49,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
-            android:text="The Great War has come, the Wall has fallen and the Night King's army of the dead marches towards Westeros. The end is here, but who will take the Iron Throne?"
+            android:layout_marginBottom="5dp"
+            android:maxLines="6"
+            android:ellipsize="end"
+            tools:text="The Great War has come, the Wall has fallen and the Night King's army of the dead marches towards Westeros. The end is here, but who will take the Iron Throne?"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/seasonName"
+            app:layout_constraintStart_toEndOf="@id/tvShowPoster"
             app:layout_constraintTop_toBottomOf="@id/airDateEpisodeCount" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

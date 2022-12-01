@@ -20,7 +20,6 @@
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
             android:background="@color/cardview_dark_background"
-            android:src="@drawable/ic_launcher_foreground"
             app:layout_constraintBottom_toTopOf="@id/personBiography"
             app:layout_constraintEnd_toStartOf="@id/personName"
             app:layout_constraintStart_toStartOf="parent"
@@ -103,7 +102,7 @@
 
         <include
             android:id="@+id/personFilmographyList"
-            layout="@layout/movie_poster_list"
+            layout="@layout/poster_list"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@id/personPhotosLabel"
@@ -115,7 +114,7 @@
             android:id="@+id/personFilmographyDirection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
+            android:layout_marginEnd="20dp"
             android:text="@string/see_all_label"
             android:textAllCaps="true"
             android:textColor="#1e77fc"

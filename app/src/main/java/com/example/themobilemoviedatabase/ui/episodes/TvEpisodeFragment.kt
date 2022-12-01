@@ -5,19 +5,35 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
+import com.example.themobilemoviedatabase.Application
 import com.example.themobilemoviedatabase.R
+import com.example.themobilemoviedatabase.data.network.utils.Resources
 import com.example.themobilemoviedatabase.databinding.FragmentTvEpisodeBinding
+import com.example.themobilemoviedatabase.ui.adapter.TvEpisodeAdapter
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class TvEpisodeFragment : Fragment() {
     private var _binding: FragmentTvEpisodeBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: TvEpisodeViewModel by viewModels {
+        TvEpisodeViewModel.tvEpisodeViewModelFactory(
+            (activity?.application as Application).tvSeasonRepository
+        )
+    }
+    private val tvShowId: Int by lazy { arguments?.getInt("tvShowId") as Int }
+    private val seasonNumber: Int by lazy { arguments?.getInt("seasonNumber") as Int }
+    private val adapter by lazy { TvEpisodeAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,32 +45,57 @@ class TvEpisodeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.textView.setOnClickListener { view ->
-            val detailsDirection = TvEpisodeFragmentDirections.actionTvEpisodeFragmentToEpisodeDetailFragment()
-            findNavController().navigate(detailsDirection)
+
+        viewModel.setFilmId(tvShowId)
+        viewModel.setSeasonNumber(seasonNumber)
+
+        binding.tvEpisodeList.adapter = adapter
+        binding.tvEpisodeList.setHasFixedSize(true)
+        adapter.setOnItemClickListener { view ->
+            val viewHolder = view.tag as RecyclerView.ViewHolder
+            val position = viewHolder.layoutPosition
+
+            val episode = adapter.currentList[position]
+
+            //Toast.makeText(view.context, "$episode", Toast.LENGTH_LONG).show()
+
+            val directions = TvEpisodeFragmentDirections
+                .actionTvEpisodeFragmentToEpisodeDetailFragment(
+                    tvShowId = tvShowId,
+                    seasonNumber = seasonNumber,
+                    episodeNumber = episode.episode_number!!
+                )
+            findNavController().navigate(directions)
         }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.tvSeason.collectLatest { response ->
+                when (response) {
+                    is Resources.Loading -> {
+                        binding.progressCircular.isVisible = true
+                        binding.tvEpisodeList.isVisible = false
+                    }
+                    is Resources.Success -> {
+                        binding.progressCircular.isVisible = false
+                        binding.tvEpisodeList.isVisible = true
+                        response.data?.let { season ->
+                            adapter.submitList(season.episodes)
+                        }
+                    }
+                    is Resources.Error -> {
+                        binding.progressCircular.isVisible = false
+                        binding.tvEpisodeList.isVisible = false
+                    }
+                }
+            }
+        }
+//        binding.textView.setOnClickListener { view ->
+//            val detailsDirection = TvEpisodeFragmentDirections.actionTvEpisodeFragmentToEpisodeDetailFragment()
+//            findNavController().navigate(detailsDirection)
+//        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment TvEpisodeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            TvEpisodeFragment().apply {
-                arguments = Bundle().apply {
-
-                }
-            }
     }
 }

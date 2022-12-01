@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_home_screen_to_detailFragment"
             app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_home_screen_to_detailsTvShowFragment"
+            app:destination="@id/detailsTvShowFragment" />
     </fragment>
     <fragment
         android:id="@+id/favorite_screen"
@@ -24,6 +27,9 @@
             android:id="@+id/action_favorite_screen_to_detailFragment"
             app:destination="@id/detailFragment"
             app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_favorite_screen_to_detailsTvShowFragment"
+            app:destination="@id/detailsTvShowFragment" />
     </fragment>
     <fragment
         android:id="@+id/search_screen"
@@ -36,6 +42,9 @@
         <action
             android:id="@+id/action_search_screen_to_castFragment"
             app:destination="@id/castFragment" />
+        <action
+            android:id="@+id/action_search_screen_to_detailsTvShowFragment"
+            app:destination="@id/detailsTvShowFragment" />
     </fragment>
     <fragment
         android:id="@+id/settings_screen"
@@ -62,22 +71,20 @@
         android:label="@string/empty_label"
         tools:layout="@layout/fragment_detail_movie">
         <action
-            android:id="@+id/action_detailFragment_to_favorite_screen"
-            app:destination="@id/favorite_screen"
-            app:popUpTo="@id/favorite_screen"
-            app:popUpToInclusive="true" />
-        <action
             android:id="@+id/action_detailFragment_to_reviewFragment"
             app:destination="@id/reviewFragment" />
         <action
             android:id="@+id/action_detailFragment_to_castFragment"
             app:destination="@id/castFragment" />
         <action
-            android:id="@+id/action_detailFragment_to_tvSeasonFragment"
-            app:destination="@id/tvSeasonFragment" />
-        <action
             android:id="@+id/action_detailFragment_self"
             app:destination="@id/detailFragment" />
+        <argument
+            android:name="film_id"
+            app:argType="integer" />
+        <argument
+            android:name="movieTitle"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/castFragment"
@@ -99,29 +106,47 @@
     <fragment
         android:id="@+id/tvSeasonFragment"
         android:name="com.example.themobilemoviedatabase.ui.seasons.TvSeasonFragment"
-        android:label="fragment_tv_season"
-        tools:layout="@layout/fragment_tv_season" >
+        android:label="@string/season_label"
+        tools:layout="@layout/fragment_tv_season">
         <action
             android:id="@+id/action_tvSeasonFragment_to_tvEpisodeFragment"
             app:destination="@id/tvEpisodeFragment" />
+        <argument
+            android:name="tvShowId"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/tvEpisodeFragment"
         android:name="com.example.themobilemoviedatabase.ui.episodes.TvEpisodeFragment"
-        android:label="fragment_tv_episode"
-        tools:layout="@layout/fragment_tv_episode" >
+        android:label="@string/episode_label"
+        tools:layout="@layout/fragment_tv_episode">
         <action
             android:id="@+id/action_tvEpisodeFragment_to_episodeDetailFragment"
             app:destination="@id/episodeDetailFragment" />
+        <argument
+            android:name="tvShowId"
+            app:argType="integer" />
+        <argument
+            android:name="seasonNumber"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/episodeDetailFragment"
         android:name="com.example.themobilemoviedatabase.ui.episodes.detail.TvEpisodeDetailFragment"
-        android:label="fragment_episode_detail"
-        tools:layout="@layout/fragment_tv_episode_detail" >
+        android:label="@string/empty_label"
+        tools:layout="@layout/fragment_tv_episode_detail">
         <action
             android:id="@+id/action_episodeDetailFragment_to_castFragment"
             app:destination="@id/castFragment" />
+        <argument
+            android:name="tvShowId"
+            app:argType="integer" />
+        <argument
+            android:name="seasonNumber"
+            app:argType="integer" />
+        <argument
+            android:name="episodeNumber"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/personFilmographyFragment"
@@ -131,5 +156,35 @@
         <action
             android:id="@+id/action_personFilmographyFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_personFilmographyFragment_to_detailsTvShowFragment"
+            app:destination="@id/detailsTvShowFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsTvShowFragment"
+        android:name="com.example.themobilemoviedatabase.ui.details.DetailsTvShowFragment"
+        android:label="@string/empty_label"
+        tools:layout="@layout/fragment_details_tv_show">
+        <action
+            android:id="@+id/action_detailsTvShowFragment_to_tvSeasonFragment"
+            app:destination="@id/tvSeasonFragment" />
+        <argument
+            android:name="tvShowId"
+            app:argType="integer" />
+        <argument
+            android:name="tvShowTitle"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_detailsTvShowFragment_self"
+            app:destination="@id/detailsTvShowFragment" />
+        <action
+            android:id="@+id/action_detailsTvShowFragment_to_reviewFragment"
+            app:destination="@id/reviewFragment" />
+        <action
+            android:id="@+id/action_detailsTvShowFragment_to_tvEpisodeFragment"
+            app:destination="@id/tvEpisodeFragment" />
+        <action
+            android:id="@+id/action_detailsTvShowFragment_to_castFragment"
+            app:destination="@id/castFragment" />
     </fragment>
 </navigation>

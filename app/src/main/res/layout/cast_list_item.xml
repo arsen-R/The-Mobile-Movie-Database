@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
+    android:layout_margin="2.5dp"
     app:cardUseCompatPadding="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,14 +13,14 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/castImage"
             android:layout_width="103dp"
-            android:layout_height="wrap_content"
+            android:layout_height="155dp"
             android:layout_marginBottom="5dp"
             android:adjustViewBounds="true"
             android:maxHeight="155dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_launcher_foreground"
             app:layout_constraintBottom_toTopOf="@id/castName"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,7 +32,7 @@
             android:ellipsize="end"
             android:singleLine="true"
             android:text="Cast Name"
-            android:textSize="11sp"
+            android:textSize="13sp"
             app:layout_constraintBottom_toTopOf="@id/castCharacter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:text="Cast character"
-            android:textSize="8sp"
+            android:textSize="11sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

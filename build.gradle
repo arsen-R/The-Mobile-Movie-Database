@@ -2,7 +2,7 @@
 buildscript {
     ext.kotlin_version = '1.7.10'
     ext.retrofit_version = '2.9.0'
-    ext.nav_version = '2.5.2'
+    ext.nav_version = '2.5.3'
     ext.coroutines_version = '1.6.4'
     ext.room_version = '2.4.3'
     ext.paging_version = '3.1.1'

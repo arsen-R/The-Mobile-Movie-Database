@@ -39,31 +39,20 @@ class MainActivity : AppCompatActivity() {
 
             navController.addOnDestinationChangedListener { _, destination, _ ->
                 if (destination.id == R.id.search_screen) {
-                    toolbar.isVisible = false
                     appBarLayout.isVisible = false
+                    bottomNavBar.isVisible = true
                 } else if (destination.id == R.id.home_screen) {
-                    toolbar.isVisible = false
-                    appBarLayout.isVisible = false
+                    appBarLayout.isVisible = true
                     bottomNavBar.isVisible = true
-                } else if (destination.id == R.id.detailFragment) {
-                    toolbar.isVisible = true
+                } else if (destination.id == R.id.favorite_screen) {
+                    appBarLayout.isVisible = true
+                    bottomNavBar.isVisible = true
+                } else if (destination.id == R.id.profile_screen) {
+                    appBarLayout.isVisible = true
+                    bottomNavBar.isVisible = true
+                } else {
                     appBarLayout.isVisible = true
                     bottomNavBar.isVisible = false
-                } else if (destination.id == R.id.tvSeasonFragment) {
-                    bottomNavBar.isVisible = false
-                } else if (destination.id == R.id.tvEpisodeFragment) {
-                    bottomNavBar.isVisible = false
-                } else if (destination.id == R.id.settings_screen) {
-                    bottomNavBar.isVisible = false
-                } else if (destination.id == R.id.reviewFragment) {
-                    bottomNavBar.isVisible = false
-                } else if (destination.id == R.id.castFragment) {
-                    bottomNavBar.isVisible = false
-                }
-                else {
-                    bottomNavBar.isVisible = true
-                    toolbar.isVisible = true
-                    appBarLayout.isVisible = true
                 }
             }
         }

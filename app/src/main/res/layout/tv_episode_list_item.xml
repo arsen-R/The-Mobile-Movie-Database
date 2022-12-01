@@ -12,39 +12,39 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/tvShowPoster"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:maxWidth="103dp"
-            android:maxHeight="155dp"
+            android:layout_width="180dp"
+            android:layout_height="100dp"
+            android:background="@color/grey"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/episodeName"
+            app:layout_constraintEnd_toStartOf="@id/tvEpisodeDescription"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            style="@style/Theme.TheMobileMovieDatabase.TextView.Title"
             android:id="@+id/episodeName"
-            android:layout_width="wrap_content"
+            style="@style/Theme.TheMobileMovieDatabase.TextView.Title"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
             android:text="1 - Winter is coming"
+            app:layout_constraintEnd_toEndOf="@id/tvEpisodeDescription"
             app:layout_constraintBottom_toTopOf="@id/tvEpisodeDescription"
-            app:layout_constraintStart_toEndOf="@id/tvShowPoster"
+            app:layout_constraintStart_toStartOf="@id/tvEpisodeDescription"
             app:layout_constraintTop_toTopOf="parent" />
-
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvEpisodeDescription"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
+            android:layout_marginHorizontal="10dp"
+            android:ellipsize="end"
+            android:maxLines="4"
             android:text="The Great War has come, the Wall has fallen and the Night King's army of the dead marches towards Westeros. The end is here, but who will take the Iron Throne?"
-            android:textSize="14sp"
+            android:textSize="11.5sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/episodeName"
+            app:layout_constraintStart_toEndOf="@id/tvShowPoster"
             app:layout_constraintTop_toBottomOf="@id/episodeName" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

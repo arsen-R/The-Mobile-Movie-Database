@@ -1,131 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.person.PersonFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScroll"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/tvEpisodePoster"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:maxHeight="350dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintBottom_toTopOf="@id/tvEpisodeTitle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/tvEpisodePoster"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:maxHeight="350dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toTopOf="@id/tvEpisodeTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            style="@style/Theme.TheMobileMovieDatabase.TextView.Label"
-            android:id="@+id/tvEpisodeTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
-            android:text="Title"
-            app:layout_constraintBottom_toTopOf="@id/tvEpisodeDescription"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvEpisodePoster" />
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Theme.TheMobileMovieDatabase.TextView.Label"
+                android:id="@+id/tvEpisodeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:text="Title"
+                app:layout_constraintBottom_toTopOf="@id/tvEpisodeDescription"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvEpisodePoster" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvEpisodeDescription"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:text="TV Episode Description"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvEpisodeTitle"
-            app:layout_constraintBottom_toTopOf="@id/castLabel"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvEpisodeDescription"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:text="TV Episode Description"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvEpisodeTitle"
+                app:layout_constraintBottom_toTopOf="@id/castLabel"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/castLabel"
-            style="@style/Theme.TheMobileMovieDatabase.TextView.Label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cast_label"
-            app:layout_constraintBottom_toTopOf="@id/castsList"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvEpisodeDescription" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/castLabel"
+                style="@style/Theme.TheMobileMovieDatabase.TextView.Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cast_label"
+                app:layout_constraintBottom_toTopOf="@id/castsList"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvEpisodeDescription" />
 
-        <include
-            android:id="@+id/castsList"
-            layout="@layout/cast_list"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/castLabel"
-            app:layout_constraintBottom_toTopOf="@id/directorLabel"/>
+            <include
+                android:id="@+id/castsList"
+                layout="@layout/cast_list"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/castLabel"
+                app:layout_constraintBottom_toTopOf="@id/directorLabel"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            style="@style/Theme.TheMobileMovieDatabase.TextView.Crew"
-            android:id="@+id/directorLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Director"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/castsList"
-            app:layout_constraintBottom_toTopOf="@id/directorName"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Theme.TheMobileMovieDatabase.TextView.Crew"
+                android:id="@+id/directorLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Director"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/castsList"
+                app:layout_constraintBottom_toTopOf="@id/directorName"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/directorName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:text="Director name"
-            app:layout_constraintStart_toStartOf="@id/directorLabel"
-            app:layout_constraintTop_toBottomOf="@id/directorLabel"
-            app:layout_constraintBottom_toTopOf="@id/writersLabel"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/directorName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="Director name"
+                app:layout_constraintStart_toStartOf="@id/directorLabel"
+                app:layout_constraintTop_toBottomOf="@id/directorLabel"
+                app:layout_constraintBottom_toTopOf="@id/writersLabel"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            style="@style/Theme.TheMobileMovieDatabase.TextView.Crew"
-            android:id="@+id/writersLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Writers"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/directorName"
-            app:layout_constraintBottom_toTopOf="@id/writersName"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Theme.TheMobileMovieDatabase.TextView.Crew"
+                android:id="@+id/writersLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Writers"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/directorName"
+                app:layout_constraintBottom_toTopOf="@id/writersName"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/writersName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Writers name"
-            android:textSize="15sp"
-            app:layout_constraintStart_toStartOf="@id/writersLabel"
-            app:layout_constraintBottom_toTopOf="@id/imagePosterLabel"
-            app:layout_constraintTop_toBottomOf="@id/writersLabel" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/writersName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Writers name"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="@id/writersLabel"
+                app:layout_constraintBottom_toTopOf="@id/imagePosterLabel"
+                app:layout_constraintTop_toBottomOf="@id/writersLabel" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/imagePosterLabel"
-            style="@style/Theme.TheMobileMovieDatabase.TextView.Label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Episode Image"
-            app:layout_constraintBottom_toTopOf="@id/imagePostersList"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/writersName" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/imagePosterLabel"
+                style="@style/Theme.TheMobileMovieDatabase.TextView.Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Episode Image"
+                app:layout_constraintBottom_toTopOf="@id/imagePostersList"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/writersName" />
 
-        <include
-            android:id="@+id/imagePostersList"
-            layout="@layout/image_list"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imagePosterLabel" />
+            <include
+                android:id="@+id/imagePostersList"
+                layout="@layout/image_list"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imagePosterLabel" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
-</androidx.core.widget.NestedScrollView>
+
+    <ProgressBar
+        android:id="@+id/progress_circular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
