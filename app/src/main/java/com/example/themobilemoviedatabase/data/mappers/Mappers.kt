@@ -103,7 +103,7 @@ fun GenreDto.toGenre(): Genre {
 
 fun ImagesDto.toImages(): Images {
     return Images(
-        backdrops = this.backdrops?.map { it.toBackdrop() }!!
+        backdrops = this.backdrops?.map { it.toBackdrop() }!!,
     )
 }
 
@@ -250,6 +250,7 @@ fun EpisodeDto.toEpisode(): Episode {
 fun TvEpisodeDetailsDto.toTvEpisodeDetails(): TvEpisodeDetails {
     return TvEpisodeDetails(
         air_date = this.air_date,
+        crew = crew?.map { it.toCrew() },
         //credits = this.credits?.toCredits(),
         episode_number = this.episode_number,
         id = this.id,
@@ -262,5 +263,81 @@ fun TvEpisodeDetailsDto.toTvEpisodeDetails(): TvEpisodeDetails {
         still_path = this.still_path,
         vote_average = this.vote_average,
         vote_count = this.vote_count,
+    )
+}
+
+fun CastResultDto.toCastResult(): CastResult {
+    return CastResult(
+        cast = this.cast?.map { it.toCast() }
+    )
+}
+
+fun CrewDto.toCrew(): Crew {
+    return Crew(
+        adult = this.adult,
+        credit_id = this.credit_id,
+        department = this.department,
+        gender = this.gender,
+        id = this.id,
+        job = this.job,
+        known_for_department = this.known_for_department,
+        name = this.name,
+        original_name = this.original_name,
+        popularity = this.popularity,
+        profile_path = this.profile_path
+    )
+}
+
+fun StillResultDto.toStillResult(): StillsResult {
+    return StillsResult(
+        id = this.id,
+        stills = this.stills?.map { it.toBackdrop() }
+    )
+}
+
+fun AuthorDetailsDto.toAuthorDetails(): AuthorDetails {
+    return AuthorDetails(
+        avatar_path = this.avatar_path,
+        name = this.name,
+        rating = this.rating,
+        username = this.username
+    )
+}
+
+fun ReviewDto.toReview(): Review {
+    return Review(
+        author = author,
+        author_details = author_details?.toAuthorDetails(),
+        content = this.content,
+        created_at = this.created_at,
+        id = this.id,
+        updated_at = this.updated_at,
+        url = this.url
+    )
+}
+
+fun ReviewResultDto.toReviewResult(): ReviewResult {
+    return ReviewResult(
+        id = this.id,
+        page = this.page,
+        results = this.results?.map { it.toReview() },
+        total_pages = this.total_pages,
+        total_results = this.total_results
+    )
+}
+
+fun ReviewDetailDto.toReviewDetail(): ReviewDetail {
+    return ReviewDetail(
+        author = this.author,
+        author_details = this.author_details?.toAuthorDetails(),
+        content = this.content,
+        created_at = this.created_at,
+        id = this.id,
+        iso_639_1 = this.iso_639_1,
+        media_id = this.media_id,
+        media_title = this.media_title,
+        media_type = this.media_type,
+        updated_at = this.updated_at,
+        url = this.url
     )
 }

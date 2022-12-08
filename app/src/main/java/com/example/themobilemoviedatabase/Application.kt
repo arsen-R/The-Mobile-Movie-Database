@@ -1,12 +1,9 @@
 package com.example.themobilemoviedatabase
 
 import android.app.Application
-import com.example.themobilemoviedatabase.data.repository.HomeRepositoryImpl
 import com.example.themobilemoviedatabase.data.network.ApiService
 import com.example.themobilemoviedatabase.data.network.MovieApiService
-import com.example.themobilemoviedatabase.data.repository.DetailRepositoryImpl
-import com.example.themobilemoviedatabase.data.repository.TvEpisodeDetailsRepositoryImpl
-import com.example.themobilemoviedatabase.data.repository.TvSeasonRepositoryImpl
+import com.example.themobilemoviedatabase.data.repository.*
 
 class Application : Application() {
     private val apiService: MovieApiService by lazy { ApiService.movieApiService }
@@ -16,6 +13,7 @@ class Application : Application() {
     val tvEpisodeDetailsRepository by lazy {
         TvEpisodeDetailsRepositoryImpl(apiService)
     }
+    val reviewRepository by lazy { ReviewRepositoryImpl(apiService) }
 
     override fun onCreate() {
         super.onCreate()

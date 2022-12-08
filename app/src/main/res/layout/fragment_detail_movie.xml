@@ -72,7 +72,6 @@
                 android:layout_height="0dp"
                 app:barrierDirection="bottom"
                 app:constraint_referenced_ids="ratingButton,favoriteButton,shareButton"
-                tools:layout_editor_absoluteY="512dp"
                 tools:viewBindingIgnore="true" />
 
             <androidx.appcompat.widget.AppCompatTextView

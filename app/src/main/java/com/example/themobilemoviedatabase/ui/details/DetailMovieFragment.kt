@@ -2,13 +2,13 @@ package com.example.themobilemoviedatabase.ui.details
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -21,13 +21,16 @@ import com.example.themobilemoviedatabase.MainActivity
 import com.example.themobilemoviedatabase.R
 import com.example.themobilemoviedatabase.data.network.utils.Resources
 import com.example.themobilemoviedatabase.databinding.FragmentDetailMovieBinding
-import com.example.themobilemoviedatabase.domain.model.*
+import com.example.themobilemoviedatabase.domain.model.Backdrops
+import com.example.themobilemoviedatabase.domain.model.Cast
+import com.example.themobilemoviedatabase.domain.model.Genre
+import com.example.themobilemoviedatabase.domain.model.Movie
+import com.example.themobilemoviedatabase.domain.util.Constants
 import com.example.themobilemoviedatabase.domain.util.Constants.IMAGE_URL
 import com.example.themobilemoviedatabase.ui.adapter.CastAdapter
 import com.example.themobilemoviedatabase.ui.adapter.ImageAdapter
 import com.example.themobilemoviedatabase.ui.adapter.PosterItemAdapter
 import com.google.android.material.chip.Chip
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class DetailMovieFragment : Fragment() {
@@ -102,8 +105,10 @@ class DetailMovieFragment : Fragment() {
             }
 
             ratingButton.setOnClickListener { v ->
-                Toast.makeText(view.context, "Rating 7.5/10", Toast.LENGTH_LONG).show()
-                val action = DetailMovieFragmentDirections.actionDetailFragmentToReviewFragment()
+                val action = DetailMovieFragmentDirections.actionDetailFragmentToReviewFragment(
+                    mediaType = Constants.MOVIE_PARAMS,
+                    id = movieId
+                )
                 findNavController().navigate(action)
             }
 
@@ -164,7 +169,7 @@ class DetailMovieFragment : Fragment() {
                 DetailMovieFragmentDirections.actionDetailFragmentSelf(movie.id!!, movie.title!!)
             findNavController().navigate(directions)
         }
-        
+
         moviePostersAdapter.submitList(similarMovies)
     }
 

@@ -8,7 +8,8 @@
     <string name="profile_label">Profile</string>
     <string name="settings_label">Settings</string>
     <string name="empty_label" />
-    <string name="review_label">User reviews</string>
+    <string name="user_review_label">User reviews</string>
+    <string name="review_label">Review</string>
     <string name="season_label">Seasons</string>
     <string name="episode_label">Episodes</string>
 
@@ -62,4 +63,6 @@
 
     <string name="episode_name">%1$d - %2$s</string>
     <string name="empty_episode_description">Episode %1$d premiered on %2$s.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

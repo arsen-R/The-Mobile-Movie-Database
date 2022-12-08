@@ -2,13 +2,13 @@ package com.example.themobilemoviedatabase.ui.details
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -95,7 +95,8 @@ class DetailsTvShowFragment : Fragment() {
                                 ratingButton.text = "$rating/10"
 
                                 setupSimilarTvShow(tv.similar?.results)
-                                val lastSeason = tv.seasons?.sortedWith(compareBy { it.air_date })?.last()
+                                val lastSeason =
+                                    tv.seasons?.sortedWith(compareBy { it.air_date })?.last()
                                 setupLastTvSeason(
                                     lastSeason,
                                     tv.name!!
@@ -117,9 +118,12 @@ class DetailsTvShowFragment : Fragment() {
                 findNavController().navigate(direction)
             }
 
-            ratingButton.setOnClickListener { v ->
-                Toast.makeText(view.context, "Rating 7.5/10", Toast.LENGTH_LONG).show()
-                val action = DetailsTvShowFragmentDirections.actionDetailsTvShowFragmentToReviewFragment()
+            ratingButton.setOnClickListener { v -> 
+                val action =
+                    DetailsTvShowFragmentDirections.actionDetailsTvShowFragmentToReviewFragment(
+                        Constants.TV_PARAM,
+                        tvShowId
+                    )
                 findNavController().navigate(action)
             }
 
@@ -149,6 +153,7 @@ class DetailsTvShowFragment : Fragment() {
             }
         }
     }
+
     private fun setupTvShowEpisode(season: Season?) {
         binding.lastSeasonLayout.seasonCardView.setOnClickListener {
             val episodeDirection = DetailsTvShowFragmentDirections
@@ -159,6 +164,7 @@ class DetailsTvShowFragment : Fragment() {
             findNavController().navigate(episodeDirection)
         }
     }
+
     private fun setupMoviePoster(posterPath: String?) {
         binding.movieHeader.moviePoster.load(Constants.IMAGE_URL + posterPath) {
             crossfade(true)
@@ -185,7 +191,8 @@ class DetailsTvShowFragment : Fragment() {
 
             val tv = moviePostersAdapter.currentList[position]
 
-            val directions = DetailsTvShowFragmentDirections.actionDetailsTvShowFragmentSelf(tv.id!!, tv.title!!)
+            val directions =
+                DetailsTvShowFragmentDirections.actionDetailsTvShowFragmentSelf(tv.id!!, tv.title!!)
             findNavController().navigate(directions)
         }
 
@@ -236,7 +243,7 @@ class DetailsTvShowFragment : Fragment() {
         }
         binding.lastSeasonLayout.tvShowPoster.load(IMAGE_URL + lastSeason.poster_path) {
             crossfade(true)
-            transformations(RoundedCornersTransformation(15f,0f,15f,0f))
+            transformations(RoundedCornersTransformation(15f, 0f, 15f, 0f))
         }
     }
 

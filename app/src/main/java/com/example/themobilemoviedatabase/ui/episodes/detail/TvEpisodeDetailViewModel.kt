@@ -44,6 +44,55 @@ class TvEpisodeDetailViewModel(
         initialValue = Resources.Loading()
     )
 
+    val tvEpisodeCast = combine(
+        tvShowIdFlow,
+        seasonNumberFlow,
+        episodeNumberFlow,
+        languageFlow
+    ) { (tvShowId, seasonNumber, episodeNumber, language) ->
+        DataPreferences(
+            filmId = tvShowId as Int,
+            seasonNumber = seasonNumber as Int,
+            episodeNumber = episodeNumber as Int,
+            language = language as String
+        )
+    }.flatMapLatest {
+        repository.getTvEpisodeCastById(
+            tvShowId = it.filmId!!,
+            seasonNumber = it.seasonNumber!!,
+            episodeNumber = it.episodeNumber!!,
+            language = it.language!!
+        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(1000L),
+        initialValue = Resources.Loading()
+    )
+    val tvEpisodeImage = combine(
+        tvShowIdFlow,
+        seasonNumberFlow,
+        episodeNumberFlow,
+        languageFlow
+    ) { (tvShowId, seasonNumber, episodeNumber, language) ->
+        DataPreferences(
+            filmId = tvShowId as Int,
+            seasonNumber = seasonNumber as Int,
+            episodeNumber = episodeNumber as Int,
+            language = language as String
+        )
+    }.flatMapLatest {
+        repository.getTvEpisodeImageById(
+            tvShowId = it.filmId!!,
+            seasonNumber = it.seasonNumber!!,
+            episodeNumber = it.episodeNumber!!,
+            language = it.language!!
+        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(1000L),
+        initialValue = Resources.Loading()
+    )
+
     fun setSeasonNumber(seasonNumber: Int) {
         seasonNumberFlow.value = seasonNumber
     }

@@ -10,7 +10,7 @@
         android:id="@+id/home_screen"
         android:name="com.example.themobilemoviedatabase.ui.home.HomeFragment"
         android:label="@string/home_label"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_home_screen_to_detailFragment"
             app:destination="@id/detailFragment" />
@@ -35,7 +35,7 @@
         android:id="@+id/search_screen"
         android:name="com.example.themobilemoviedatabase.ui.search.SearchFragment"
         android:label="@string/search_label"
-        tools:layout="@layout/fragment_search" >
+        tools:layout="@layout/fragment_search">
         <action
             android:id="@+id/action_search_screen_to_detailFragment"
             app:destination="@id/detailFragment" />
@@ -90,7 +90,7 @@
         android:id="@+id/castFragment"
         android:name="com.example.themobilemoviedatabase.ui.person.PersonFragment"
         android:label="@string/empty_label"
-        tools:layout="@layout/fragment_person" >
+        tools:layout="@layout/fragment_person">
         <action
             android:id="@+id/action_castFragment_to_detailFragment2"
             app:destination="@id/detailFragment" />
@@ -101,8 +101,19 @@
     <fragment
         android:id="@+id/reviewFragment"
         android:name="com.example.themobilemoviedatabase.ui.review.ReviewFragment"
-        android:label="@string/review_label"
-        tools:layout="@layout/fragment_review" />
+        android:label="@string/user_review_label"
+        tools:layout="@layout/fragment_review" >
+        <argument
+            android:name="mediaType"
+            app:argType="string" />
+        <argument
+            android:name="id"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <action
+            android:id="@+id/action_reviewFragment_to_reviewDetailFragment"
+            app:destination="@id/reviewDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/tvSeasonFragment"
         android:name="com.example.themobilemoviedatabase.ui.seasons.TvSeasonFragment"
@@ -152,7 +163,7 @@
         android:id="@+id/personFilmographyFragment"
         android:name="com.example.themobilemoviedatabase.ui.person.filmography.PersonFilmographyFragment"
         android:label="fragment_person_filmography"
-        tools:layout="@layout/fragment_person_filmography" >
+        tools:layout="@layout/fragment_person_filmography">
         <action
             android:id="@+id/action_personFilmographyFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
@@ -186,5 +197,19 @@
         <action
             android:id="@+id/action_detailsTvShowFragment_to_castFragment"
             app:destination="@id/castFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoriteItemMovieFragment"
+        android:name="com.example.themobilemoviedatabase.ui.favorite.favorite_item.FavoriteItemMovieFragment"
+        android:label="fragment_favorite_item_movie"
+        tools:layout="@layout/fragment_favorite_item_movie" />
+    <fragment
+        android:id="@+id/reviewDetailFragment"
+        android:name="com.example.themobilemoviedatabase.ui.review.ReviewDetailFragment"
+        android:label="@string/review_label"
+        tools:layout="@layout/fragment_review_detail">
+        <argument
+            android:name="reviewId"
+            app:argType="string" />
     </fragment>
 </navigation>

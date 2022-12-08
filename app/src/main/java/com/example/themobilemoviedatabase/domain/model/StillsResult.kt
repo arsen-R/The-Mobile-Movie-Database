@@ -1,6 +1,7 @@
 package com.example.themobilemoviedatabase.domain.model
 
-data class Images(
-    val backdrops: List<Backdrops>? = null,
+data class StillsResult(
+    val id: Int? = null,
     val stills: List<Backdrops>? = null
-)
+) {
+}

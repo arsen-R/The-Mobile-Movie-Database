@@ -1,7 +1,6 @@
 package com.example.themobilemoviedatabase.ui.review
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,17 +8,18 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import coil.transform.CircleCropTransformation
 import com.example.themobilemoviedatabase.Application
 import com.example.themobilemoviedatabase.data.network.utils.Resources
-import com.example.themobilemoviedatabase.databinding.FragmentReviewBinding
-import com.example.themobilemoviedatabase.ui.adapter.ReviewAdapter
+import com.example.themobilemoviedatabase.databinding.FragmentReviewDetailBinding
+import com.example.themobilemoviedatabase.domain.util.Constants
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 
-class ReviewFragment : Fragment() {
-    private var _binding: FragmentReviewBinding? = null
+class ReviewDetailFragment : Fragment() {
+    private var _binding: FragmentReviewDetailBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: ReviewViewModel by viewModels {
@@ -27,10 +27,7 @@ class ReviewFragment : Fragment() {
             (activity?.application as Application).reviewRepository
         )
     }
-    private val adapter: ReviewAdapter by lazy { ReviewAdapter() }
-
-    private val movieId by lazy { arguments?.getInt("id") as Int }
-    private val mediaType by lazy { arguments?.getString("mediaType") as String }
+    private val reviewId: String by lazy { arguments?.getString("reviewId") as String }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,48 +37,36 @@ class ReviewFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentReviewBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentReviewDetailBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        Log.d("Review Data Fetch", "Media Type = $mediaType | Id = $id")
-
-        viewModel.setMediaType(mediaType)
-        viewModel.setFilmId(movieId)
-
-        binding.reviewList.adapter = adapter
-        binding.reviewList.setHasFixedSize(true)
-        adapter.setOnItemClickListener { view ->
-            val viewHolder = view.tag as RecyclerView.ViewHolder
-            val position = viewHolder.layoutPosition
-
-            val review = adapter.currentList[position]
-
-            val direction =
-                ReviewFragmentDirections.actionReviewFragmentToReviewDetailFragment(review.id!!)
-            findNavController().navigate(direction)
-        }
+        viewModel.setReviewId(reviewId)
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.review.collect { response ->
-                when (response) {
+            viewModel.reviewDetail.collectLatest { response ->
+                when(response) {
                     is Resources.Loading -> {
                         binding.progressCircular.isVisible = true
-                        binding.reviewList.isVisible = false
+                        binding.nestedScroll.isVisible = false
                     }
                     is Resources.Success -> {
                         binding.progressCircular.isVisible = false
-                        binding.reviewList.isVisible = true
+                        binding.nestedScroll.isVisible = true
                         response.data?.let { review ->
-                            Log.d("Review Data Fetch", "${review.results}")
-                            adapter.submitList(review.results)
+                            binding.accountAvatarImage.load(Constants.IMAGE_URL + review.author_details?.avatar_path) {
+                                crossfade(true)
+                                transformations(CircleCropTransformation())
+                            }
+                            binding.accountUsername.text = review.author
+                            binding.createdDateReview.text = review.created_at
+                            binding.reviewText.text = review.content
                         }
                     }
                     is Resources.Error -> {
                         binding.progressCircular.isVisible = false
-                        binding.reviewList.isVisible = false
+                        binding.nestedScroll.isVisible = false
                     }
                 }
             }
@@ -90,5 +75,6 @@ class ReviewFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        _binding = null
     }
 }

@@ -66,16 +66,10 @@ class PostersAdapter : RecyclerView.Adapter<CinemaViewModel>() {
     }
 
     override fun onBindViewHolder(holder: CinemaViewModel, position: Int) {
-        //Toast.makeText(holder.itemView.context, "${data.size}", Toast.LENGTH_LONG).show()
         holder.bind(data[position])
     }
 
     override fun getItemCount(): Int {
         return data.size
-    }
-
-    fun clearData() {
-        data.clear()
-        notifyDataSetChanged()
     }
 }

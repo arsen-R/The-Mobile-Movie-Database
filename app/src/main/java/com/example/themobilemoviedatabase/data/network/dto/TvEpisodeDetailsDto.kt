@@ -7,6 +7,9 @@ data class TvEpisodeDetailsDto(
     @SerializedName("air_date")
     @Expose
     val air_date: String? = null,
+    @SerializedName("crew")
+    @Expose
+    val crew: List<CrewDto>? = null,
 //    @SerializedName("credits")
 //    @Expose
 //    val credits: CreditsDto? = null,
@@ -16,9 +19,9 @@ data class TvEpisodeDetailsDto(
     @SerializedName("id")
     @Expose
     val id: Int? = null,
-   // @SerializedName("images")
-   // @Expose
-    //val images: ImagesDto? = null,
+//    @SerializedName("images")
+//    @Expose
+//    val images: ImagesDto? = null,
     @SerializedName("name")
     @Expose
     val name: String? = null,

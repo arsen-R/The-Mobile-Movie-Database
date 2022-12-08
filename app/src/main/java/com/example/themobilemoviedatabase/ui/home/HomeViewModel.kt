@@ -1,12 +1,10 @@
 package com.example.themobilemoviedatabase.ui.home
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.themobilemoviedatabase.data.network.utils.Resources
 import com.example.themobilemoviedatabase.data.repository.HomeRepositoryImpl
-import com.example.themobilemoviedatabase.domain.model.Movie
 import kotlinx.coroutines.flow.*
 
 class HomeViewModel(private val repository: HomeRepositoryImpl) : ViewModel() {

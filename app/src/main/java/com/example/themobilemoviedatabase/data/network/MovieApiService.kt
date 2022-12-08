@@ -95,6 +95,39 @@ interface MovieApiService {
         @Path("episode_number") episodeNumber: Int,
         @Query("api_key") apiKey: String = API_KEY,
         @Query("language") language: String = "en",
-        //@Query("append_to_response") appendToResponse: String = "credits"
     ) : TvEpisodeDetailsDto
+
+    @GET("/3/tv/{tv_show_id}/season/{season_number}/episode/{episode_number}/credits")
+    suspend fun getTvEpisodeCastById(
+        @Path("tv_show_id") tvShowId: Int,
+        @Path("season_number") seasonNumber: Int,
+        @Path("episode_number") episodeNumber: Int,
+        @Query("api_key") apiKey: String = API_KEY,
+        @Query("language") language: String = "en",
+    ) : CastResultDto
+
+    @GET("/3/tv/{tv_show_id}/season/{season_number}/episode/{episode_number}/images")
+    suspend fun getTvEpisodeImageById(
+        @Path("tv_show_id") tvShowId: Int,
+        @Path("season_number") seasonNumber: Int,
+        @Path("episode_number") episodeNumber: Int,
+        @Query("api_key") apiKey: String = API_KEY,
+        @Query("language") language: String = "en",
+    ) : StillResultDto
+
+
+    @GET("/3/{media_type}/{id}/reviews")
+    suspend fun getAllReviewById(
+        @Path("media_type") mediaType: String,
+        @Path("id") id: Int,
+        @Query("api_key") apiKey: String = API_KEY,
+        @Query("language") language: String = "en",
+        @Query("page") page: Int = 1
+    ): ReviewResultDto
+
+    @GET("/3/review/{reviewId}")
+    suspend fun getReviewDetailById(
+        @Path("reviewId") reviewId: String,
+        @Query("api_key") apiKey: String = API_KEY,
+    ) : ReviewDetailDto
 }

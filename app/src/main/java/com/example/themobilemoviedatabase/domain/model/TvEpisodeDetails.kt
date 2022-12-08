@@ -2,10 +2,11 @@ package com.example.themobilemoviedatabase.domain.model
 
 data class TvEpisodeDetails(
     val air_date: String? = null,
-    //val credits: Credits? = null,
+    val crew: List<Crew>? = null,
+//    val credits: Credits? = null,
     val episode_number: Int? = null,
     val id: Int? = null,
-    //val images: Images? = null,
+//    val images: Images? = null,
     val name: String? = null,
     val overview: String? = null,
     val production_code: String? = null,
