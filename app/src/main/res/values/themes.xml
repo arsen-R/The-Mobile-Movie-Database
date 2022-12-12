@@ -38,7 +38,7 @@
         <item name="android:background">@color/grey_light_3</item>
         <item name="queryBackground">@android:color/transparent</item>
         <item name="iconifiedByDefault">false</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="Theme.TheMobileMovieDatabase.TextView.Label" parent="Widget.AppCompat.TextView">
@@ -52,7 +52,6 @@
 
     <style name="Theme.TheMobileMovieDatabase.TextView.ListMovieTitle" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="Theme.TheMobileMovieDatabase.TabLayout" parent="Widget.MaterialComponents.TabLayout">

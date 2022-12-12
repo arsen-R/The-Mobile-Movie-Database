@@ -89,7 +89,7 @@
     <fragment
         android:id="@+id/castFragment"
         android:name="com.example.themobilemoviedatabase.ui.person.PersonFragment"
-        android:label="@string/empty_label"
+        android:label="@string/person_label"
         tools:layout="@layout/fragment_person">
         <action
             android:id="@+id/action_castFragment_to_detailFragment2"
@@ -97,6 +97,12 @@
         <action
             android:id="@+id/action_castFragment_to_personFilmographyFragment"
             app:destination="@id/personFilmographyFragment" />
+        <argument
+            android:name="personId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_castFragment_to_detailsTvShowFragment"
+            app:destination="@id/detailsTvShowFragment" />
     </fragment>
     <fragment
         android:id="@+id/reviewFragment"
@@ -161,8 +167,8 @@
     </fragment>
     <fragment
         android:id="@+id/personFilmographyFragment"
-        android:name="com.example.themobilemoviedatabase.ui.person.filmography.PersonFilmographyFragment"
-        android:label="fragment_person_filmography"
+        android:name="com.example.themobilemoviedatabase.ui.person.PersonFilmographyFragment"
+        android:label="@string/filmography_label"
         tools:layout="@layout/fragment_person_filmography">
         <action
             android:id="@+id/action_personFilmographyFragment_to_detailFragment"
@@ -170,6 +176,9 @@
         <action
             android:id="@+id/action_personFilmographyFragment_to_detailsTvShowFragment"
             app:destination="@id/detailsTvShowFragment" />
+        <argument
+            android:name="personId"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/detailsTvShowFragment"

@@ -341,3 +341,117 @@ fun ReviewDetailDto.toReviewDetail(): ReviewDetail {
         url = this.url
     )
 }
+
+fun PersonDto.toPerson(): Person {
+    return Person(
+        adult = this.adult,
+        also_known_as = this.also_known_as,
+        biography = this.biography,
+        birthday = this.birthday,
+        deathday = this.deathday,
+        gender = this.gender,
+        homepage = this.homepage,
+        id = this.id,
+        imdb_id = this.imdb_id,
+        known_for_department = this.known_for_department,
+        name = this.name,
+        place_of_birth = this.place_of_birth,
+        popularity = this.popularity,
+        profile_path = this.profile_path,
+        images = this.images?.toPersonImage(),
+        combineCredits = this.combineCredits?.toPersonFilmography()
+    )
+}
+
+fun PersonImageDto.toPersonImage(): PersonImage {
+    return PersonImage(
+        profiles = this.profiles?.map { it?.toProfile() }
+    )
+}
+
+fun ProfileDto.toProfile(): Profile {
+    return Profile(
+        aspect_ratio = this.aspect_ratio,
+        file_path = this.file_path,
+        height = this.height,
+        vote_average = this.vote_average,
+        vote_count = this.vote_count,
+        width = this.width
+    )
+}
+
+fun PersonFilmographyDto.toPersonFilmography(): PersonFilmography {
+    return PersonFilmography(
+        cast = this.cast?.map { it.toPersonCast() }
+    )
+}
+
+fun PersonCastDto.toPersonCast(): PersonCast {
+    return PersonCast(
+        adult = this.adult,
+        backdrop_path = this.backdrop_path,
+        character = this.character,
+        credit_id = this.credit_id,
+        genre_ids = this.genre_ids,
+        id = this.id,
+        media_type = this.media_type,
+        name = this.name,
+        order = this.order,
+        origin_country = this.origin_country,
+        original_language = this.original_language,
+        original_name = this.original_name,
+        original_title = this.original_title,
+        overview = this.overview,
+        popularity = this.popularity,
+        poster_path = this.poster_path,
+        release_date = this.release_date,
+        title = this.title,
+        video = this.video,
+        vote_average = this.vote_average,
+        vote_count = this.vote_count,
+        first_air_date = this.first_air_date
+    )
+}
+
+fun FilmographyResultDto.toFilmographyResult(): FilmographyResult {
+    return FilmographyResult(
+        cast = this.cast?.map { it.toPersonCast() },
+        id = this.id
+    )
+}
+
+fun SearchResultDto.toSearchResult(): SearchResult {
+    return SearchResult(
+        page = this.page,
+        results = this.results?.map { it.toMultiSearch() },
+        total_pages = this.total_pages,
+        total_results = this.total_results
+    )
+}
+
+fun MultiSearchDto.toMultiSearch(): MultiSearch {
+    return MultiSearch(
+        adult = this.adult,
+        backdrop_path = this.backdrop_path,
+        first_air_date = this.first_air_date,
+        gender = this.gender,
+        genre_ids = this.genre_ids,
+        id = this.id,
+        known_for_department = this.known_for_department,
+        media_type = this.media_type,
+        name = this.name,
+        origin_country = this.origin_country,
+        original_language = this.original_language,
+        original_name = this.original_name,
+        original_title = this.original_title,
+        overview = this.overview,
+        popularity = this.popularity,
+        poster_path = this.poster_path,
+        profile_path = this.profile_path,
+        release_date = this.release_date,
+        title = this.title,
+        video = this.video,
+        vote_average = this.vote_average,
+        vote_count = this.vote_count
+    )
+}

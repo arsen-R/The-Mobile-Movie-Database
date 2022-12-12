@@ -30,12 +30,13 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/movieTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Title"
         android:textColor="@color/white"
         android:textSize="22sp"
         android:textStyle="bold"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="@id/moviePosterBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

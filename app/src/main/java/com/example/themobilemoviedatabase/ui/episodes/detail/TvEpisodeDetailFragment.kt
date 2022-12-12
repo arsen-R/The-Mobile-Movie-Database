@@ -174,9 +174,8 @@ class TvEpisodeDetailFragment : Fragment() {
             val position = viewHolder.layoutPosition
 
             val cast = castAdapter.currentList[position]
-            Toast.makeText(view.context, "${cast.name}", Toast.LENGTH_LONG).show()
             val castDirections =
-                TvEpisodeDetailFragmentDirections.actionEpisodeDetailFragmentToCastFragment()
+                TvEpisodeDetailFragmentDirections.actionEpisodeDetailFragmentToCastFragment(cast.id!!)
             findNavController().navigate(castDirections)
         }
         Log.d("Cast List Request", "$casts")

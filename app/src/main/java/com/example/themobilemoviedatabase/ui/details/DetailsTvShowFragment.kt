@@ -210,7 +210,7 @@ class DetailsTvShowFragment : Fragment() {
             val cast = castAdapter.currentList[position]
             Toast.makeText(view.context, "${cast.name}", Toast.LENGTH_LONG).show()
             val castDirections =
-                DetailsTvShowFragmentDirections.actionDetailsTvShowFragmentToCastFragment()
+                DetailsTvShowFragmentDirections.actionDetailsTvShowFragmentToCastFragment(cast.id!!)
             findNavController().navigate(castDirections)
         }
         Log.d("Cast List Request", "$casts")

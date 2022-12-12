@@ -22,8 +22,9 @@
         style="@style/Theme.TheMobileMovieDatabase.TextView.ListMovieTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginHorizontal="16dp"
         android:text="Title"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tvShowPoster"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/ratingImage"/>
@@ -35,20 +36,24 @@
         android:text="2022"
         android:layout_marginStart="10dp"
         android:textSize="13sp"
-        app:layout_constraintTop_toTopOf="@id/titleMovieText"
-        app:layout_constraintStart_toEndOf="@id/titleMovieText"
-        app:layout_constraintBottom_toBottomOf="@id/titleMovieText"
+        app:layout_constraintTop_toTopOf="@id/ratingMovie"
+        app:layout_constraintStart_toEndOf="@id/ratingMovie"
+        app:layout_constraintBottom_toBottomOf="@id/ratingMovie"
 
  />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/personCharacter"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Character"
+        android:layout_marginEnd="16dp"
+        android:maxLines="1"
+        android:ellipsize="end"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ratingImage"
-        app:layout_constraintStart_toStartOf="@id/ratingImage"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/ratingImage"
+        app:layout_constraintTop_toBottomOf="@id/ratingImage" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ratingImage"

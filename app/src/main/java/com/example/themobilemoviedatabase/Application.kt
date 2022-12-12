@@ -10,10 +10,10 @@ class Application : Application() {
     val repository: HomeRepositoryImpl by lazy { HomeRepositoryImpl(apiService) }
     val detailRepositoryImpl by lazy { DetailRepositoryImpl(apiService) }
     val tvSeasonRepository by lazy { TvSeasonRepositoryImpl(apiService) }
-    val tvEpisodeDetailsRepository by lazy {
-        TvEpisodeDetailsRepositoryImpl(apiService)
-    }
+    val tvEpisodeDetailsRepository by lazy { TvEpisodeDetailsRepositoryImpl(apiService) }
     val reviewRepository by lazy { ReviewRepositoryImpl(apiService) }
+    val personRepository by lazy { PersonRepositoryImpl(apiService) }
+    val searchRepository by lazy { SearchRepositoryImpl(apiService) }
 
     override fun onCreate() {
         super.onCreate()

@@ -1,14 +1,15 @@
-package com.example.themobilemoviedatabase.data.database
+package com.example.themobilemoviedatabase.domain.model
 
-data class Result(
+data class PersonCrew(
     val adult: Boolean?,
     val backdrop_path: String?,
+    val credit_id: String?,
+    val department: String?,
+    val episode_count: Int?,
     val first_air_date: String?,
-    val gender: Int?,
     val genre_ids: List<Int?>?,
     val id: Int?,
-    val known_for: List<KnownFor?>?,
-    val known_for_department: String?,
+    val job: String?,
     val media_type: String?,
     val name: String?,
     val origin_country: List<String?>?,
@@ -18,7 +19,6 @@ data class Result(
     val overview: String?,
     val popularity: Double?,
     val poster_path: String?,
-    val profile_path: String?,
     val release_date: String?,
     val title: String?,
     val video: Boolean?,

@@ -8,4 +8,6 @@ object Constants {
 
     const val MOVIE_PARAMS = "movie"
     const val TV_PARAM = "tv"
+    const val PERSON_PARAM = "person"
+    const val INITIAL_PAGE_NUMBER = 1
 }

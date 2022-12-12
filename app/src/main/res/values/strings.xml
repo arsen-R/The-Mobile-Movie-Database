@@ -12,6 +12,7 @@
     <string name="review_label">Review</string>
     <string name="season_label">Seasons</string>
     <string name="episode_label">Episodes</string>
+    <string name="person_label">Person</string>
 
     <!-- Preference Category Titles -->
     <string name="display_header">Display</string>

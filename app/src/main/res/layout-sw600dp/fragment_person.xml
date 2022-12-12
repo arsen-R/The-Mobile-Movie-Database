@@ -21,11 +21,10 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/personImage"
-                android:layout_width="155dp"
-                android:layout_height="230dp"
+                android:layout_width="175dp"
+                android:layout_height="260dp"
                 android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginVertical="10dp"
                 android:adjustViewBounds="true"
                 android:background="@color/cardview_dark_background"
                 android:scaleType="fitCenter"
@@ -49,9 +48,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
+                android:maxLines="20"
                 android:ellipsize="end"
-                android:maxLines="7"
                 android:text="Person biography"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@id/personFilmographyLabel"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -74,6 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:text="Oct. 23, 1986"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/personBornLabel"
                 app:layout_constraintStart_toEndOf="@id/personBornLabel"
                 app:layout_constraintTop_toTopOf="@id/personBornLabel" />
@@ -97,6 +98,7 @@
                 android:layout_marginStart="5dp"
                 android:text="Oct. 23, 1986"
                 android:visibility="gone"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/personDiedLabel"
                 app:layout_constraintStart_toEndOf="@id/personDiedLabel"
                 app:layout_constraintTop_toTopOf="@id/personDiedLabel" />
@@ -177,6 +179,7 @@
                 android:layout_marginTop="5dp"
                 android:text="London, England, UK"
                 android:layout_marginEnd="12dp"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/personPlaceBirthLabel"
                 app:layout_constraintTop_toBottomOf="@id/personPlaceBirthLabel" />
