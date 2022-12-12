@@ -1,11 +1,13 @@
 package com.example.themobilemoviedatabase.domain.model.util
 
+import com.example.themobilemoviedatabase.domain.model.Backdrops
 import java.io.Serializable
 
 open class BaseMovie(
     open val posterPath: String? = null,
     open val title: String? = null,
     open val media_type: String? = null,
+    open val backdrops: String? = null,
     open val id: Int? = null
 ) : Serializable {
 
@@ -26,6 +28,7 @@ open class BaseMovie(
         if (title != other.title) return false
         if (media_type != other.media_type) return false
         if (id != other.id) return false
+        if(backdrops != other.backdrops) return false
 
         return true
     }

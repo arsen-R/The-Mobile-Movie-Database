@@ -4,13 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupWithNavController
 import com.example.themobilemoviedatabase.R
 import com.example.themobilemoviedatabase.databinding.FragmentFavoriteBinding
+import com.example.themobilemoviedatabase.ui.adapter.TabLayoutAdapter
+import com.google.android.material.tabs.TabLayoutMediator
 
 
 class FavoriteFragment : Fragment() {
@@ -32,28 +30,21 @@ class FavoriteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val tabLayoutList = resources.getStringArray(R.array.tab_layout_category).toList()
+        val tabLayoutAdapter = TabLayoutAdapter(this)
+        with(binding) {
+            favoriteViewPager.adapter = tabLayoutAdapter
+            val tabLayoutMediator =
+                TabLayoutMediator(favoriteTabLayout, favoriteViewPager) { tab, position ->
+                    tab.text = tabLayoutList[position]
+                }
+            tabLayoutMediator.attach()
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FavoriteFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FavoriteFragment().apply {
-                arguments = Bundle().apply {
-                }
-            }
     }
 }

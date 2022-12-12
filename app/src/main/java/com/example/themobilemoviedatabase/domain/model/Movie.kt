@@ -19,4 +19,4 @@ data class Movie(
     val vote_average: Double? = null,
     val vote_count: Int? = null,
     val mediaType: String? = "movie"
-) : BaseMovie(poster_path, title, mediaType, id), Serializable
+) : BaseMovie(posterPath = poster_path, title = title, media_type = mediaType, id = id), Serializable

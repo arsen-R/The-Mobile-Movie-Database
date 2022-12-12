@@ -21,10 +21,7 @@ import com.example.themobilemoviedatabase.MainActivity
 import com.example.themobilemoviedatabase.R
 import com.example.themobilemoviedatabase.data.network.utils.Resources
 import com.example.themobilemoviedatabase.databinding.FragmentDetailMovieBinding
-import com.example.themobilemoviedatabase.domain.model.Backdrops
-import com.example.themobilemoviedatabase.domain.model.Cast
-import com.example.themobilemoviedatabase.domain.model.Genre
-import com.example.themobilemoviedatabase.domain.model.Movie
+import com.example.themobilemoviedatabase.domain.model.*
 import com.example.themobilemoviedatabase.domain.util.Constants
 import com.example.themobilemoviedatabase.domain.util.Constants.IMAGE_URL
 import com.example.themobilemoviedatabase.ui.adapter.CastAdapter
@@ -94,6 +91,8 @@ class DetailMovieFragment : Fragment() {
                                 ratingButton.text = "$rating/10"
 
                                 setupSimilarMovie(movie.similar?.results)
+
+                                setupFavoriteMovie(movie)
                             }
                         }
                         is Resources.Error -> {
@@ -111,34 +110,58 @@ class DetailMovieFragment : Fragment() {
                 )
                 findNavController().navigate(action)
             }
-
-            favoriteButton.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    favoriteButton.setCompoundDrawablesWithIntrinsicBounds(
-                        null,
-                        ContextCompat.getDrawable(view.context, R.drawable.ic_round_favorite_24),
-                        null,
-                        null
-                    )
-                } else {
-                    favoriteButton.setCompoundDrawablesWithIntrinsicBounds(
-                        null,
-                        ContextCompat.getDrawable(
-                            view.context,
-                            R.drawable.ic_round_favorite_border_24
-                        ),
-                        null,
-                        null
-                    )
-                }
-            }
-
+        checkFavoriteIcon()
             shareButton.setOnClickListener { view ->
                 Toast.makeText(view.context, "Share", Toast.LENGTH_LONG).show()
             }
         }
     }
-
+    private fun checkFavoriteIcon() {
+        if (viewModel.getMovieById(movieId) == 1) {
+            binding.favoriteButton.setCompoundDrawablesWithIntrinsicBounds(
+                null,
+                ContextCompat.getDrawable(view?.context!!, R.drawable.ic_round_favorite_24),
+                null,
+                null
+            )
+        } else {
+            binding.favoriteButton.setCompoundDrawablesWithIntrinsicBounds(
+                null,
+                ContextCompat.getDrawable(
+                    view?.context!!,
+                    R.drawable.ic_round_favorite_border_24
+                ),
+                null,
+                null
+            )
+        }
+    }
+    private fun setupFavoriteMovie(movieDetail: MovieDetail) {
+        binding.favoriteButton.setOnCheckedChangeListener { _, isChecked ->
+            if (viewModel.getMovieById(movieId) != 1) {
+                viewModel.insertMovie(movieDetail)
+                binding.favoriteButton.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    ContextCompat.getDrawable(view?.context!!, R.drawable.ic_round_favorite_24),
+                    null,
+                    null
+                )
+                Toast.makeText(view?.context!!, "Added", Toast.LENGTH_LONG).show()
+            } else {
+                viewModel.deleteMovieById(movieDetail.id!!)
+                binding.favoriteButton.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    ContextCompat.getDrawable(
+                        view?.context!!,
+                        R.drawable.ic_round_favorite_border_24
+                    ),
+                    null,
+                    null
+                )
+                Toast.makeText(view?.context!!, "Remove", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
     private fun setupMoviePoster(posterPath: String?) {
         binding.movieHeader.moviePoster.load(IMAGE_URL + posterPath) {
             crossfade(true)

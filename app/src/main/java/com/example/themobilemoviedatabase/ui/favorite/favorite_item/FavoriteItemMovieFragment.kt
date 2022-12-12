@@ -1,23 +1,35 @@
 package com.example.themobilemoviedatabase.ui.favorite.favorite_item
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.themobilemoviedatabase.R
-
-
-
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
+import com.example.themobilemoviedatabase.Application
+import com.example.themobilemoviedatabase.databinding.FragmentFavoriteItemMovieBinding
+import com.example.themobilemoviedatabase.domain.util.Constants
+import com.example.themobilemoviedatabase.ui.adapter.FavoriteAdapter
+import com.example.themobilemoviedatabase.ui.favorite.FavoriteFragmentDirections
+import com.example.themobilemoviedatabase.ui.favorite.FavoriteViewModel
+import kotlinx.coroutines.launch
 
 class FavoriteItemMovieFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+    private var _binding: FragmentFavoriteItemMovieBinding? = null
+    private val binding get() = _binding!!
+    private val viewModel: FavoriteViewModel by viewModels {
+        FavoriteViewModel.favoriteViewModelFactory(
+            (activity?.application as Application).favoriteRepository
+        )
+    }
+    private val adapter by lazy { FavoriteAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
     }
 
     override fun onCreateView(
@@ -25,25 +37,52 @@ class FavoriteItemMovieFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favorite_item_movie, container, false)
+        _binding = FragmentFavoriteItemMovieBinding.inflate(
+            layoutInflater,
+            container,
+            false
+        )
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FavoriteItemMovieFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FavoriteItemMovieFragment().apply {
-                arguments = Bundle().apply {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.personFilmography.adapter = adapter
+        binding.personFilmography.setHasFixedSize(true)
+        adapter.setOnItemClickListener { view ->
+            val viewHolder = view.tag as RecyclerView.ViewHolder
+            val position = viewHolder.layoutPosition
 
+            val movie = adapter.currentList[position]
+
+            if (movie.media_type == Constants.MOVIE_PARAMS) {
+                val direction = FavoriteFragmentDirections.actionFavoriteScreenToDetailFragment(
+                    filmId = movie.id!!,
+                    movieTitle = movie.title!!
+                )
+                findNavController().navigate(direction)
+            }
+        }
+        arguments?.takeIf {
+            it.containsKey("tab").apply {
+                val requiredTab = it.getInt("tab")
+                if (requiredTab == 1) {
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        viewModel.getAllMovie().collect { movie ->
+                            adapter.submitList(movie)
+                        }
+                    }
+                    Toast.makeText(view.context, "Movie", Toast.LENGTH_LONG).show()
+                }
+                if (requiredTab == 2) {
+                    Toast.makeText(view.context, "TV Show", Toast.LENGTH_LONG).show()
                 }
             }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

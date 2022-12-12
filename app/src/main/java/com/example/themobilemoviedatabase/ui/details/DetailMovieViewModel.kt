@@ -5,15 +5,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.themobilemoviedatabase.data.network.utils.Resources
 import com.example.themobilemoviedatabase.data.repository.DetailRepositoryImpl
-import com.example.themobilemoviedatabase.data.repository.HomeRepositoryImpl
 import com.example.themobilemoviedatabase.domain.model.MovieDetail
 import com.example.themobilemoviedatabase.domain.repository.DetailRepository
-import com.example.themobilemoviedatabase.ui.home.HomeViewModel
 import kotlinx.coroutines.flow.*
 
 class DetailMovieViewModel(
-    private val repository: DetailRepository
-) : ViewModel(){
+    private val repository: DetailRepository,
+) : ViewModel() {
     private val filmIdState: MutableStateFlow<Int> = MutableStateFlow(0)
     private val languageState: MutableStateFlow<String> = MutableStateFlow("en")
 
@@ -40,14 +38,27 @@ class DetailMovieViewModel(
     fun setFilmId(filmId: Int) {
         filmIdState.value = filmId
     }
+
     fun setLanguage(language: String) {
         languageState.tryEmit(language)
+    }
+
+
+    fun insertMovie(movieDetail: MovieDetail) {
+        repository.insertMovie(movieDetail)
+    }
+
+    fun getMovieById(movieId: Int) = repository.getMovieById(movieId)
+
+    fun deleteMovieById(movieId: Int) {
+        repository.deleteMovie(movieId)
     }
 
     private data class DataPreference(
         val filmId: Int? = null,
         val language: String? = null
     )
+
     companion object {
         fun detailViewModelFactory(repository: DetailRepositoryImpl) =
             object : ViewModelProvider.Factory {

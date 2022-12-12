@@ -1,6 +1,9 @@
 package com.example.themobilemoviedatabase.data.repository
 
+import com.example.themobilemoviedatabase.data.database.AppDatabase
+import com.example.themobilemoviedatabase.data.database.MovieDao
 import com.example.themobilemoviedatabase.data.mappers.toMovieDetail
+import com.example.themobilemoviedatabase.data.mappers.toMovieDetailEntity
 import com.example.themobilemoviedatabase.data.mappers.toTvShowDetail
 import com.example.themobilemoviedatabase.data.network.MovieApiService
 import com.example.themobilemoviedatabase.data.network.utils.Resources
@@ -8,13 +11,11 @@ import com.example.themobilemoviedatabase.domain.model.MovieDetail
 import com.example.themobilemoviedatabase.domain.model.TvShowDetail
 import com.example.themobilemoviedatabase.domain.repository.DetailRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.*
 
 class DetailRepositoryImpl(
-    private val apiService: MovieApiService
+    private val apiService: MovieApiService,
+    private val database: AppDatabase
 ) : DetailRepository {
 
     override suspend fun getMovieDetailById(
@@ -41,5 +42,17 @@ class DetailRepositoryImpl(
         }.catch { exception ->
             emit(Resources.Error(exception.message.toString()))
         }.flowOn(context = Dispatchers.IO)
+    }
+
+    override fun getMovieById(movieId: Int): Int {
+        return database.movieDao().getSavedMovieById(movieId)
+    }
+
+    override fun insertMovie(movieDetail: MovieDetail) {
+       database.movieDao().insertMovieDetail(movieDetail.toMovieDetailEntity())
+    }
+
+    override fun deleteMovie(movieId: Int) {
+        database.movieDao().deleteArticle(movieId)
     }
 }

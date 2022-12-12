@@ -1,16 +1,17 @@
-package com.example.themobilemoviedatabase.domain.model
+package com.example.themobilemoviedatabase.data.database.entity
 
-import com.example.themobilemoviedatabase.domain.model.util.BaseMovie
-import com.example.themobilemoviedatabase.domain.util.Constants
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-data class MovieDetail(
+@Entity(tableName = "movie_table")
+data class MovieDetailEntity(
     val adult: Boolean? = null,
     val backdrop_path: String? = null,
     val budget: Int? = null,
-    val genres: List<Genre?>? = null,
     val homepage: String? = null,
-    override val id: Int? = null,
-    val imdb_id: String? = null,
+    @PrimaryKey
+    val id: Int? = null,
+    val imdb_id: String?= null,
     val original_language: String? = null,
     val original_title: String? = null,
     val overview: String? = null,
@@ -21,11 +22,8 @@ data class MovieDetail(
     val runtime: Int? = null,
     val status: String? = null,
     val tagline: String? = null,
-    override val title: String? = null,
+    val title: String? = null,
     val video: Boolean? = null,
     val vote_average: Double? = null,
     val vote_count: Int? = null,
-    val credits: Credits? = null,
-    val images: Images? = null,
-    val similar: MovieResult? = null
-) : BaseMovie(title = title, backdrops = backdrop_path, media_type = Constants.MOVIE_PARAMS, id = id)
+)

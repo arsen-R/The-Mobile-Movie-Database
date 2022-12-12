@@ -39,4 +39,8 @@
     </string-array>
     <!-- endregion -->
 
+    <string-array name="tab_layout_category">
+        <item>@string/movie_label</item>
+        <item>@string/tv_show_label</item>
+    </string-array>
 </resources>
