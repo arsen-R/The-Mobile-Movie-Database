@@ -15,7 +15,7 @@
         <item name="bottom_item_text_color">@color/grey_dark_2</item>
         <item name="android:textSize">15sp</item>
         <item name="movie_list_background">@color/grey_light_3</item>
-        <item name="icon_tint">@color/grey_dark_2</item>
+        <item name="icon_tint">@color/bottom_nav_icon_inactive</item>
     </style>
 
     <style name="Base.Theme.TheMobileMovieDatabase" parent="Base.V21.Theme.TheMobileMovieDatabase" />

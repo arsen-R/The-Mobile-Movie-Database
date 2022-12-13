@@ -10,4 +10,5 @@ object Constants {
     const val TV_PARAM = "tv"
     const val PERSON_PARAM = "person"
     const val INITIAL_PAGE_NUMBER = 1
+    const val EMAIL_ADDRESS = "arsen240302@gmail.com"
 }

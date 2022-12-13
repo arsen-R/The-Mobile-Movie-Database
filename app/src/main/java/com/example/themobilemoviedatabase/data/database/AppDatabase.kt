@@ -5,8 +5,13 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.themobilemoviedatabase.data.database.entity.MovieDetailEntity
+import com.example.themobilemoviedatabase.data.database.entity.TvShowDetailEntity
 
-@Database(entities = [MovieDetailEntity::class], version = 1, exportSchema = false)
+@Database(
+    entities = [MovieDetailEntity::class, TvShowDetailEntity::class],
+    version = 2,
+    exportSchema = false
+)
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {
@@ -20,7 +25,7 @@ abstract class AppDatabase : RoomDatabase() {
                     context,
                     AppDatabase::class.java,
                     DATABASE_NAME
-                ).allowMainThreadQueries().build()
+                ).allowMainThreadQueries().fallbackToDestructiveMigration().build()
                 database = instance
                 instance
             }

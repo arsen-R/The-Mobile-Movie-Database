@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.BlurTransformation
@@ -60,11 +61,13 @@ class DetailsTvShowFragment : Fragment() {
         _binding = FragmentDetailsTvShowBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
-
+    private fun getLoadData() {
+        viewModel.setFilmId(tvShowId)
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).supportActionBar?.title = tvShowTitle
-        viewModel.setFilmId(tvShowId)
+        getLoadData()
         with(binding) {
             viewLifecycleOwner.lifecycleScope.launch {
                 viewModel.tvDetails.collect { response ->
@@ -72,8 +75,10 @@ class DetailsTvShowFragment : Fragment() {
                         is Resources.Loading -> {
                             binding.progressCircular.isVisible = true
                             binding.nestedScroll.isVisible = false
+                            hideError()
                         }
                         is Resources.Success -> {
+                            hideError()
                             binding.progressCircular.isVisible = false
                             binding.nestedScroll.isVisible = true
                             response.data?.let { tv ->
@@ -102,23 +107,25 @@ class DetailsTvShowFragment : Fragment() {
                                     tv.name!!
                                 )
                                 setupTvShowEpisode(lastSeason)
+
+                                setupFavoriteTvShow(tv)
                             }
                         }
                         is Resources.Error -> {
                             binding.progressCircular.isVisible = false
                             binding.nestedScroll.isVisible = false
+                            showError()
                         }
                     }
                 }
             }
-
+            checkFavoriteIcon()
             allSeasonText.setOnClickListener {
                 val direction = DetailsTvShowFragmentDirections
                     .actionDetailsTvShowFragmentToTvSeasonFragment(tvShowId)
                 findNavController().navigate(direction)
             }
-
-            ratingButton.setOnClickListener { v -> 
+            ratingButton.setOnClickListener { v ->
                 val action =
                     DetailsTvShowFragmentDirections.actionDetailsTvShowFragmentToReviewFragment(
                         Constants.TV_PARAM,
@@ -126,34 +133,63 @@ class DetailsTvShowFragment : Fragment() {
                     )
                 findNavController().navigate(action)
             }
-
-            favoriteButton.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    favoriteButton.setCompoundDrawablesWithIntrinsicBounds(
-                        null,
-                        ContextCompat.getDrawable(view.context, R.drawable.ic_round_favorite_24),
-                        null,
-                        null
-                    )
-                } else {
-                    favoriteButton.setCompoundDrawablesWithIntrinsicBounds(
-                        null,
-                        ContextCompat.getDrawable(
-                            view.context,
-                            R.drawable.ic_round_favorite_border_24
-                        ),
-                        null,
-                        null
-                    )
-                }
-            }
-
-            shareButton.setOnClickListener { view ->
-                Toast.makeText(view.context, "Share", Toast.LENGTH_LONG).show()
-            }
         }
     }
 
+    private fun checkFavoriteIcon() {
+        if (viewModel.checkTvShowById(tvShowId) == 1) {
+            binding.favoriteButton.setCompoundDrawablesWithIntrinsicBounds(
+                null,
+                ContextCompat.getDrawable(view?.context!!, R.drawable.ic_round_favorite_24),
+                null,
+                null
+            )
+        } else {
+            binding.favoriteButton.setCompoundDrawablesWithIntrinsicBounds(
+                null,
+                ContextCompat.getDrawable(
+                    view?.context!!,
+                    R.drawable.ic_round_favorite_border_24
+                ),
+                null,
+                null
+            )
+        }
+    }
+    private fun setupFavoriteTvShow(tvShowDetail: TvShowDetail) {
+        binding.favoriteButton.setOnCheckedChangeListener { _, isChecked ->
+            if (viewModel.checkTvShowById(tvShowId) != 1) {
+                viewModel.insertTvShow(tvShowDetail)
+                binding.favoriteButton.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    ContextCompat.getDrawable(view?.context!!, R.drawable.ic_round_favorite_24),
+                    null,
+                    null
+                )
+            } else {
+                viewModel.deleteTvShowById(tvShowDetail.id!!)
+                binding.favoriteButton.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    ContextCompat.getDrawable(
+                        view?.context!!,
+                        R.drawable.ic_round_favorite_border_24
+                    ),
+                    null,
+                    null
+                )
+                Toast.makeText(view?.context!!, "Deleted", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+    private fun hideError() {
+        binding.errorMessage.errorMessageImage.isVisible = false
+        binding.errorMessage.errorMessageText.isVisible = false
+    }
+
+    private fun showError() {
+        binding.errorMessage.errorMessageImage.isVisible = true
+        binding.errorMessage.errorMessageText.isVisible = true
+    }
     private fun setupTvShowEpisode(season: Season?) {
         binding.lastSeasonLayout.seasonCardView.setOnClickListener {
             val episodeDirection = DetailsTvShowFragmentDirections

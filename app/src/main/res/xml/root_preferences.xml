@@ -11,22 +11,6 @@
             app:title="@string/theme_title"
             app:useSimpleSummaryProvider="true" />
 
-        <ListPreference
-            app:defaultValue="en"
-            app:entries="@array/language_entries"
-            app:entryValues="@array/language_values"
-            app:key="language_key"
-            app:title="@string/app_language_title"
-            app:useSimpleSummaryProvider="true" />
-
-        <ListPreference
-            app:defaultValue="high_quality"
-            app:entries="@array/image_quality_entries"
-            app:entryValues="@array/image_quality_values"
-            app:key="image_quality_key"
-            app:title="@string/image_quality_title"
-            app:useSimpleSummaryProvider="true" />
-
     </PreferenceCategory>
     
 </PreferenceScreen>

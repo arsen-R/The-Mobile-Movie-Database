@@ -10,6 +10,8 @@ class FavoriteViewModel(
 
     fun getAllMovie() = repository.getAllMovie()
 
+    fun getAllTvShow() = repository.getAllTvShow()
+
     companion object {
         fun favoriteViewModelFactory(repository: FavoriteRepositoryImpl) =
             object : ViewModelProvider.Factory {

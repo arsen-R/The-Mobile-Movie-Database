@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.themobilemoviedatabase.Application
 import com.example.themobilemoviedatabase.data.network.utils.Resources
@@ -45,9 +46,12 @@ class PersonFilmographyFragment : Fragment() {
         return binding.root
     }
 
+    private fun getLoadData() {
+        viewModel.setPersonId(personId)
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.setPersonId(personId)
+        getLoadData()
         binding.personFilmography.adapter = adapter
         binding.personFilmography.setHasFixedSize(true)
         adapter.setOnItemClickListener { view ->
@@ -72,16 +76,19 @@ class PersonFilmographyFragment : Fragment() {
                 findNavController().navigate(direction)
             }
         }
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.personFilmography.collectLatest { response ->
                 when (response) {
                     is Resources.Loading -> {
                         binding.progressCircular.isVisible = true
                         binding.personFilmography.isVisible = false
+                        hideError()
                     }
                     is Resources.Success -> {
                         binding.progressCircular.isVisible = false
                         binding.personFilmography.isVisible = true
+                        hideError()
                         response.data?.let { result ->
                             adapter.submitList(result.cast?.sortedWith(compareBy {
                                 it.release_date
@@ -91,12 +98,21 @@ class PersonFilmographyFragment : Fragment() {
                     is Resources.Error -> {
                         binding.progressCircular.isVisible = false
                         binding.personFilmography.isVisible = false
+                        showError()
                     }
                 }
             }
         }
     }
+    private fun hideError() {
+        binding.errorMessage.errorMessageImage.isVisible = false
+        binding.errorMessage.errorMessageText.isVisible = false
+    }
 
+    private fun showError() {
+        binding.errorMessage.errorMessageImage.isVisible = true
+        binding.errorMessage.errorMessageText.isVisible = true
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binging = null

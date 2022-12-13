@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.themobilemoviedatabase.Application
 import com.example.themobilemoviedatabase.data.network.utils.Resources
@@ -43,15 +44,15 @@ class ReviewFragment : Fragment() {
         _binding = FragmentReviewBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
-
+    private fun getLoadData() {
+        viewModel.setMediaType(mediaType)
+        viewModel.setFilmId(movieId)
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         Log.d("Review Data Fetch", "Media Type = $mediaType | Id = $id")
-
-        viewModel.setMediaType(mediaType)
-        viewModel.setFilmId(movieId)
-
+        getLoadData()
         binding.reviewList.adapter = adapter
         binding.reviewList.setHasFixedSize(true)
         adapter.setOnItemClickListener { view ->
@@ -70,10 +71,12 @@ class ReviewFragment : Fragment() {
                     is Resources.Loading -> {
                         binding.progressCircular.isVisible = true
                         binding.reviewList.isVisible = false
+                        hideError()
                     }
                     is Resources.Success -> {
                         binding.progressCircular.isVisible = false
                         binding.reviewList.isVisible = true
+                        hideError()
                         response.data?.let { review ->
                             Log.d("Review Data Fetch", "${review.results}")
                             adapter.submitList(review.results)
@@ -82,12 +85,21 @@ class ReviewFragment : Fragment() {
                     is Resources.Error -> {
                         binding.progressCircular.isVisible = false
                         binding.reviewList.isVisible = false
+                        showError()
                     }
                 }
             }
         }
     }
+    private fun hideError() {
+        binding.errorMessage.errorMessageImage.isVisible = false
+        binding.errorMessage.errorMessageText.isVisible = false
+    }
 
+    private fun showError() {
+        binding.errorMessage.errorMessageImage.isVisible = true
+        binding.errorMessage.errorMessageText.isVisible = true
+    }
     override fun onDestroyView() {
         super.onDestroyView()
     }

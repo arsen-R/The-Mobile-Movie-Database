@@ -1,18 +1,17 @@
 package com.example.themobilemoviedatabase.ui.episodes
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.themobilemoviedatabase.Application
-import com.example.themobilemoviedatabase.R
 import com.example.themobilemoviedatabase.data.network.utils.Resources
 import com.example.themobilemoviedatabase.databinding.FragmentTvEpisodeBinding
 import com.example.themobilemoviedatabase.ui.adapter.TvEpisodeAdapter
@@ -34,6 +33,7 @@ class TvEpisodeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,11 +43,15 @@ class TvEpisodeFragment : Fragment() {
         return binding.root
     }
 
+    private fun getLoadData() {
+        viewModel.setFilmId(tvShowId)
+        viewModel.setSeasonNumber(seasonNumber)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.setFilmId(tvShowId)
-        viewModel.setSeasonNumber(seasonNumber)
+        getLoadData()
 
         binding.tvEpisodeList.adapter = adapter
         binding.tvEpisodeList.setHasFixedSize(true)
@@ -74,10 +78,12 @@ class TvEpisodeFragment : Fragment() {
                     is Resources.Loading -> {
                         binding.progressCircular.isVisible = true
                         binding.tvEpisodeList.isVisible = false
+                        hideError()
                     }
                     is Resources.Success -> {
                         binding.progressCircular.isVisible = false
                         binding.tvEpisodeList.isVisible = true
+                        hideError()
                         response.data?.let { season ->
                             adapter.submitList(season.episodes)
                         }
@@ -85,14 +91,21 @@ class TvEpisodeFragment : Fragment() {
                     is Resources.Error -> {
                         binding.progressCircular.isVisible = false
                         binding.tvEpisodeList.isVisible = false
+                        showError()
                     }
                 }
             }
         }
-//        binding.textView.setOnClickListener { view ->
-//            val detailsDirection = TvEpisodeFragmentDirections.actionTvEpisodeFragmentToEpisodeDetailFragment()
-//            findNavController().navigate(detailsDirection)
-//        }
+    }
+
+    private fun hideError() {
+        binding.errorMessage.errorMessageImage.isVisible = false
+        binding.errorMessage.errorMessageText.isVisible = false
+    }
+
+    private fun showError() {
+        binding.errorMessage.errorMessageImage.isVisible = true
+        binding.errorMessage.errorMessageText.isVisible = true
     }
 
     override fun onDestroyView() {

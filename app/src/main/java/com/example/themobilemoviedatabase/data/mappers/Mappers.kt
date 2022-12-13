@@ -1,6 +1,7 @@
 package com.example.themobilemoviedatabase.data.mappers
 
 import com.example.themobilemoviedatabase.data.database.entity.MovieDetailEntity
+import com.example.themobilemoviedatabase.data.database.entity.TvShowDetailEntity
 import com.example.themobilemoviedatabase.data.network.dto.*
 import com.example.themobilemoviedatabase.domain.model.*
 
@@ -482,6 +483,31 @@ fun MovieDetailEntity.toMovieDetail(): MovieDetail {
     )
 }
 
+fun TvShowDetailEntity.toTvShowDetail(): TvShowDetail {
+    return TvShowDetail(
+        adult = this.adult,
+        backdrop_path = this.backdrop_path,
+        first_air_date = this.first_air_date,
+        homepage = this.homepage,
+        id = this.id,
+        in_production = this.in_production,
+        last_air_date = this.last_air_date,
+        name = this.name,
+        number_of_episodes = this.number_of_episodes,
+        number_of_seasons = this.number_of_seasons,
+        original_language = this.original_language,
+        original_name = this.original_name,
+        overview = this.overview,
+        popularity = this.popularity,
+        poster_path = this.poster_path,
+        status = this.status,
+        tagline = this.tagline,
+        type = this.type,
+        vote_average = this.vote_average,
+        vote_count = this.vote_count,
+    )
+}
+
 fun MovieDetail.toMovieDetailEntity(): MovieDetailEntity {
     return MovieDetailEntity(
         adult = this.adult,
@@ -502,6 +528,30 @@ fun MovieDetail.toMovieDetailEntity(): MovieDetailEntity {
         tagline = this.tagline,
         title = this.title,
         video = this.video,
+        vote_average = this.vote_average,
+        vote_count = this.vote_count,
+    )
+}
+fun TvShowDetail.toTvShowDetailEntity(): TvShowDetailEntity {
+    return TvShowDetailEntity(
+        adult = this.adult,
+        backdrop_path = this.backdrop_path,
+        first_air_date = this.first_air_date,
+        homepage = this.homepage,
+        id = this.id,
+        in_production = this.in_production,
+        last_air_date = this.last_air_date,
+        name = this.name,
+        number_of_episodes = this.number_of_episodes,
+        number_of_seasons = this.number_of_seasons,
+        original_language = this.original_language,
+        original_name = this.original_name,
+        overview = this.overview,
+        popularity = this.popularity,
+        poster_path = this.poster_path,
+        status = this.status,
+        tagline = this.tagline,
+        type = this.type,
         vote_average = this.vote_average,
         vote_count = this.vote_count,
     )

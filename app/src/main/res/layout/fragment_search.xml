@@ -16,30 +16,31 @@
         app:layout_constraintTop_toTopOf="parent"
         app:queryHint="@string/search_hint" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        style="@style/Theme.TheMobileMovieDatabase.TextView.Label"
-        android:id="@+id/recentSearchLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/recent_searches_label"
-        app:layout_constraintBottom_toTopOf="@id/searchListLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchView" />
 
     <include
         android:id="@+id/searchListLayout"
         layout="@layout/movie_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recentSearchLabel" />
+        app:layout_constraintTop_toBottomOf="@id/searchView" />
+
     <ProgressBar
         android:id="@+id/progress_circular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/errorMessage"
+        layout="@layout/error_message"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

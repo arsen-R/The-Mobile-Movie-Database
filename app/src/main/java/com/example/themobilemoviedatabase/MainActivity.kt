@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 
             navController.addOnDestinationChangedListener { _, destination, _ ->
                 if (destination.id == R.id.search_screen) {
-                    appBarLayout.isVisible = false
+                    appBarLayout.isVisible = true
                     bottomNavBar.isVisible = true
                 } else if (destination.id == R.id.home_screen) {
                     appBarLayout.isVisible = true

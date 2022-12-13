@@ -14,8 +14,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.themobilemoviedatabase.Application
+import com.example.themobilemoviedatabase.R
 import com.example.themobilemoviedatabase.databinding.FragmentSearchBinding
 import com.example.themobilemoviedatabase.domain.util.Constants
 import com.example.themobilemoviedatabase.ui.adapter.SearchAdapter
@@ -23,7 +25,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
 
@@ -45,7 +46,9 @@ class SearchFragment : Fragment() {
         return binding.root
     }
 
+    private var searchQueryText: String? = null
     private var job: Job? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -53,7 +56,7 @@ class SearchFragment : Fragment() {
         val searchManager = (activity?.getSystemService(Context.SEARCH_SERVICE) as SearchManager)
         binding.searchView.setSearchableInfo(searchManager.getSearchableInfo(activity?.componentName))
         binding.searchView.onActionViewExpanded()
-
+        binding.searchView.setQuery(searchQueryText, false)
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 searchQuery(query)
@@ -74,15 +77,35 @@ class SearchFragment : Fragment() {
         }
     }
 
+    private var isSearchQuery = false
     private fun setupRecyclerView() {
         binding.searchListLayout.searchRecyclerList.adapter = adapter
         binding.searchListLayout.searchRecyclerList.setHasFixedSize(true)
 
         adapter.addLoadStateListener { state ->
             with(binding) {
-                searchListLayout.searchRecyclerList.isVisible = state.refresh is LoadState.NotLoading
-                //errorMessage.textErrorMessage.isVisible = state.refresh is LoadState.Error
+                searchListLayout.searchRecyclerList.isVisible =
+                    state.refresh is LoadState.NotLoading
+                errorMessage.errorMessageText.isVisible = state.refresh is LoadState.Error
+                errorMessage.errorMessageImage.isVisible = state.refresh is LoadState.Error
                 progressCircular.isVisible = state.refresh is LoadState.Loading
+                if (state.source.refresh is LoadState.NotLoading &&
+                    state.append.endOfPaginationReached
+                ) {
+                    if (adapter.itemCount < 1) {
+                        searchListLayout.searchRecyclerList.isVisible = false
+                        val noResultFound: String =
+                            context?.getText(R.string.message_no_result_found).toString()
+                        errorMessage.errorMessageText.isVisible = isSearchQuery
+                        errorMessage.errorMessageImage.isVisible = false
+                        errorMessage.errorMessageText.text = noResultFound
+                    } else {
+                        searchListLayout.searchRecyclerList.isVisible = true
+                        errorMessage.errorMessageText.isVisible = false
+                        errorMessage.errorMessageImage.isVisible = false
+                    }
+
+                }
             }
         }
 
@@ -124,7 +147,9 @@ class SearchFragment : Fragment() {
             delay(1000)
             query?.let {
                 viewModel.setSearchQuery(it)
-                //binding.searchListLayout.searchRecyclerList.scrollToPosition(0)
+                searchQueryText = it
+                isSearchQuery = true
+                binding.searchListLayout.searchRecyclerList.scrollToPosition(0)
                 binding.searchView.clearFocus()
             }
         }
@@ -139,6 +164,7 @@ class SearchFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding?.searchView?.clearFocus()
+        isSearchQuery = false
         _binding = null
 
     }

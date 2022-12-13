@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.themobilemoviedatabase.data.network.utils.Resources
 import com.example.themobilemoviedatabase.data.repository.DetailRepositoryImpl
 import com.example.themobilemoviedatabase.domain.model.MovieDetail
+import com.example.themobilemoviedatabase.domain.model.TvShowDetail
 import com.example.themobilemoviedatabase.domain.repository.DetailRepository
 import kotlinx.coroutines.flow.*
 
@@ -48,10 +49,20 @@ class DetailMovieViewModel(
         repository.insertMovie(movieDetail)
     }
 
-    fun getMovieById(movieId: Int) = repository.getMovieById(movieId)
+    fun checkMovieById(movieId: Int) = repository.checkMovieById(movieId)
 
     fun deleteMovieById(movieId: Int) {
         repository.deleteMovie(movieId)
+    }
+
+    fun checkTvShowById(tvShowId: Int) = repository.checkTvShowById(tvShowId)
+
+    fun insertTvShow(tvShowDetail: TvShowDetail) {
+        repository.insertTvShow(tvShowDetail)
+    }
+
+    fun deleteTvShowById(tvShowId: Int) {
+        repository.deleteTvShow(tvShowId)
     }
 
     private data class DataPreference(

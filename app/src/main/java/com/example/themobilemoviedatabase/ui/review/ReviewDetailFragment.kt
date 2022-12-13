@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.preference.PreferenceManager
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.themobilemoviedatabase.Application
@@ -41,19 +42,25 @@ class ReviewDetailFragment : Fragment() {
         return binding.root
     }
 
+    private fun getLoadData() {
+        viewModel.setReviewId(reviewId)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.setReviewId(reviewId)
+        getLoadData()
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.reviewDetail.collectLatest { response ->
-                when(response) {
+                when (response) {
                     is Resources.Loading -> {
                         binding.progressCircular.isVisible = true
                         binding.nestedScroll.isVisible = false
+                        hideError()
                     }
                     is Resources.Success -> {
                         binding.progressCircular.isVisible = false
                         binding.nestedScroll.isVisible = true
+                        hideError()
                         response.data?.let { review ->
                             binding.accountAvatarImage.load(Constants.IMAGE_URL + review.author_details?.avatar_path) {
                                 crossfade(true)
@@ -67,10 +74,21 @@ class ReviewDetailFragment : Fragment() {
                     is Resources.Error -> {
                         binding.progressCircular.isVisible = false
                         binding.nestedScroll.isVisible = false
+                        showError()
                     }
                 }
             }
         }
+    }
+
+    private fun hideError() {
+        binding.errorMessage?.errorMessageImage?.isVisible = false
+        binding.errorMessage?.errorMessageText?.isVisible = false
+    }
+
+    private fun showError() {
+        binding.errorMessage?.errorMessageImage?.isVisible = true
+        binding.errorMessage?.errorMessageText?.isVisible = true
     }
 
     override fun onDestroyView() {

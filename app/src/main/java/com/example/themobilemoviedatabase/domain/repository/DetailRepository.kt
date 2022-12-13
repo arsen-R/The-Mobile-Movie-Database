@@ -10,9 +10,15 @@ interface DetailRepository {
 
     suspend fun getTvShowDetailById(tvShowId: Int, language: String): Flow<Resources<TvShowDetail?>>
 
-    fun getMovieById(movieId: Int): Int
+    fun checkMovieById(movieId: Int): Int
 
     fun insertMovie(movieDetail: MovieDetail)
 
     fun deleteMovie(movieId: Int)
+
+    fun checkTvShowById(tvShowId: Int): Int
+
+    fun insertTvShow(tvShowDetail: TvShowDetail)
+
+    fun deleteTvShow(tvShowId: Int)
 }

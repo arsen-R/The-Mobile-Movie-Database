@@ -72,4 +72,9 @@ class PostersAdapter : RecyclerView.Adapter<CinemaViewModel>() {
     override fun getItemCount(): Int {
         return data.size
     }
+
+    fun clearData() {
+        data.clear()
+        notifyDataSetChanged()
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.themobilemoviedatabase.domain.model
 
-import android.net.Network
+import com.example.themobilemoviedatabase.domain.model.util.BaseMovie
+import com.example.themobilemoviedatabase.domain.util.Constants
 
 data class TvShowDetail(
     val adult: Boolean? = null,
@@ -10,7 +11,7 @@ data class TvShowDetail(
     val first_air_date: String? = null,
     val genres: List<Genre>? = null,
     val homepage: String? = null,
-    val id: Int? = null,
+    override val id: Int? = null,
     val images: Images? = null,
     val in_production: Boolean? = null,
     val languages: List<String>? = null,
@@ -33,4 +34,4 @@ data class TvShowDetail(
     val type: String? = null,
     val vote_average: Double? = null,
     val vote_count: Int? = null,
-)
+): BaseMovie(title = name, backdrops = backdrop_path, media_type = Constants.TV_PARAM, id = id)

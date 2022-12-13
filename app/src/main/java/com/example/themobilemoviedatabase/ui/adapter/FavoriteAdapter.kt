@@ -19,7 +19,6 @@ class FavoriteAdapter: ListAdapter<BaseMovie, FavoriteAdapter.FavoriteViewHolder
         fun bind(movie: BaseMovie?) {
             binding.moviePoster.load(Constants.IMAGE_URL + movie?.backdrops) {
                 crossfade(true)
-                transformations(RoundedCornersTransformation(15f))
             }
             binding.titleMovieText.text = movie?.title
         }

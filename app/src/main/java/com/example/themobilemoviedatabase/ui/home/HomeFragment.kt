@@ -2,16 +2,14 @@ package com.example.themobilemoviedatabase.ui.home
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.preference.PreferenceManager
 import com.example.themobilemoviedatabase.Application
 import com.example.themobilemoviedatabase.data.network.utils.Resources
 import com.example.themobilemoviedatabase.databinding.FragmentHomeBinding
@@ -42,10 +40,9 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        Log.d("Fragment lifecycle", "Home - On View Created")
         binding.homeList.adapter = movieAdapter
         binding.homeList.setHasFixedSize(true)
-        //viewModel.setLanguage("en")
 
         setupPopularMovieList()
         setupTrendingMovieList()
@@ -60,36 +57,40 @@ class HomeFragment : Fragment() {
 
     private fun setupTrendingMovieList() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.trendingMovie
-                    .collect { response ->
-                        Log.d(
-                            "Movie Response Data Log",
-                            "Home Movie Trending ${response.data.toString()}"
-                        )
-                        when (response) {
-                            is Resources.Loading -> {
+            viewModel.trendingMovie
+                .collect { response ->
+                    Log.d(
+                        "Movie Response Data Log",
+                        "Home Movie Trending ${response.data.toString()}"
+                    )
+                    when (response) {
+                        is Resources.Loading -> {
+                            hideError()
+                            binding.progressCircular.isVisible = true
+                            binding.homeList.isVisible = false
+                        }
+                        is Resources.Success -> {
+                            hideError()
+                            response.data.let { movie ->
                                 hideError()
-                                binding.progressCircular.isVisible = true
-                                binding.homeList.isVisible = false
-                            }
-                            is Resources.Success -> {
-                                hideError()
-                                response.data.let { movie ->
-                                    hideError()
-                                    binding.progressCircular.isVisible = false
-                                    binding.homeList.isVisible = true
-                                    movieAdapter.addData((MovieAndTvList("Trending Movie", movie!!)))
-                                }
-                            }
-                            is Resources.Error -> {
-                                showError()
-                                binding.homeList.isVisible = false
                                 binding.progressCircular.isVisible = false
+                                binding.homeList.isVisible = true
+                                movieAdapter.addData(
+                                    (MovieAndTvList(
+                                        "Trending Movie",
+                                        movie!!
+                                    ))
+                                )
                             }
                         }
+                        is Resources.Error -> {
+                            showError()
+                            binding.homeList.isVisible = false
+                            binding.progressCircular.isVisible = false
+                            showError()
+                        }
                     }
-            }
+                }
 
         }
     }
@@ -111,6 +112,7 @@ class HomeFragment : Fragment() {
                         response.data.let { movie ->
                             binding.progressCircular.isVisible = false
                             binding.homeList.isVisible = true
+                            hideError()
                             movieAdapter.addData(MovieAndTvList("Popular Movie", movie!!))
                         }
                     }
@@ -118,6 +120,7 @@ class HomeFragment : Fragment() {
                         showError()
                         binding.progressCircular.isVisible = false
                         binding.homeList.isVisible = false
+                        showError()
                     }
                 }
             }
@@ -133,9 +136,9 @@ class HomeFragment : Fragment() {
                 )
                 when (response) {
                     is Resources.Loading -> {
-                        hideError()
                         binding.progressCircular.isVisible = true
                         binding.homeList.isVisible = false
+                        hideError()
                     }
                     is Resources.Success -> {
                         hideError()
@@ -156,6 +159,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupUpcomingMovieList() {
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.upcomingMovie.collect { response ->
                 Log.d("Movie Response Data Log", "Home Upcoming Movie ${response.data.toString()}")
@@ -170,7 +174,6 @@ class HomeFragment : Fragment() {
                         binding.progressCircular.isVisible = false
                         binding.homeList.isVisible = true
                         response.data.let { movie ->
-
                             movieAdapter.addData(MovieAndTvList("Upcoming Movie", movie!!))
                         }
                     }
@@ -183,7 +186,9 @@ class HomeFragment : Fragment() {
             }
         }
     }
+
     private fun setupPopularTvShowList() {
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.popularTvShow.collect { response ->
                 Log.d("Movie Response Data Log", "Home Popular TV ${response.data.toString()}")
@@ -196,7 +201,6 @@ class HomeFragment : Fragment() {
                         hideError()
                         binding.progressCircular.isVisible = false
                         response.data.let { tv ->
-                            hideError()
                             binding.progressCircular.isVisible = false
                             binding.homeList.isVisible = true
                             movieAdapter.addData(MovieAndTvList("Popular TV", tv!!))
@@ -213,6 +217,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupTopRatedTvShowList() {
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.topRatedTvShow.collect { response ->
                 Log.d("Movie Response Data Log", "Home Top Rated TV ${response.data.toString()}")
@@ -220,9 +225,9 @@ class HomeFragment : Fragment() {
                     is Resources.Loading -> {
                         hideError()
                         binding.progressCircular.isVisible = true
+                        binding.homeList.isVisible = false
                     }
                     is Resources.Success -> {
-                        hideError()
                         response.data.let { tv ->
                             hideError()
                             binding.progressCircular.isVisible = false
@@ -248,9 +253,9 @@ class HomeFragment : Fragment() {
                     is Resources.Loading -> {
                         hideError()
                         binding.progressCircular.isVisible = true
+                        binding.homeList.isVisible = false
                     }
                     is Resources.Success -> {
-                        hideError()
                         response.data.let { tv ->
                             hideError()
                             binding.progressCircular.isVisible = false
@@ -276,9 +281,9 @@ class HomeFragment : Fragment() {
                     is Resources.Loading -> {
                         hideError()
                         binding.progressCircular.isVisible = true
+                        binding.homeList.isVisible = false
                     }
                     is Resources.Success -> {
-                        hideError()
                         response.data.let { tv ->
                             hideError()
                             binding.progressCircular.isVisible = false
@@ -297,18 +302,17 @@ class HomeFragment : Fragment() {
     }
 
     private fun hideError() {
-        binding.errorMessageImage.isVisible = false
-        binding.errorMessageText.isVisible = false
+        binding.errorMessage.errorMessageImage.isVisible = false
+        binding.errorMessage.errorMessageText.isVisible = false
     }
 
     private fun showError() {
-        binding.errorMessageImage.isVisible = true
-        binding.errorMessageText.isVisible = true
+        binding.errorMessage.errorMessageImage.isVisible = true
+        binding.errorMessage.errorMessageText.isVisible = true
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 }

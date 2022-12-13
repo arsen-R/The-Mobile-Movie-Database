@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -61,6 +60,13 @@ class FavoriteItemMovieFragment : Fragment() {
                     movieTitle = movie.title!!
                 )
                 findNavController().navigate(direction)
+            } else {
+                val direction =
+                    FavoriteFragmentDirections.actionFavoriteScreenToDetailsTvShowFragment(
+                        tvShowId = movie.id!!,
+                        tvShowTitle = movie.title!!
+                    )
+                findNavController().navigate(direction)
             }
         }
         arguments?.takeIf {
@@ -72,10 +78,13 @@ class FavoriteItemMovieFragment : Fragment() {
                             adapter.submitList(movie)
                         }
                     }
-                    Toast.makeText(view.context, "Movie", Toast.LENGTH_LONG).show()
                 }
                 if (requiredTab == 2) {
-                    Toast.makeText(view.context, "TV Show", Toast.LENGTH_LONG).show()
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        viewModel.getAllTvShow().collect { tv ->
+                            adapter.submitList(tv)
+                        }
+                    }
                 }
             }
         }

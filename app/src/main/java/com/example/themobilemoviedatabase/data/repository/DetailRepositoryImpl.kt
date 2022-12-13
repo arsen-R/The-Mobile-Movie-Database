@@ -1,10 +1,10 @@
 package com.example.themobilemoviedatabase.data.repository
 
 import com.example.themobilemoviedatabase.data.database.AppDatabase
-import com.example.themobilemoviedatabase.data.database.MovieDao
 import com.example.themobilemoviedatabase.data.mappers.toMovieDetail
 import com.example.themobilemoviedatabase.data.mappers.toMovieDetailEntity
 import com.example.themobilemoviedatabase.data.mappers.toTvShowDetail
+import com.example.themobilemoviedatabase.data.mappers.toTvShowDetailEntity
 import com.example.themobilemoviedatabase.data.network.MovieApiService
 import com.example.themobilemoviedatabase.data.network.utils.Resources
 import com.example.themobilemoviedatabase.domain.model.MovieDetail
@@ -44,8 +44,8 @@ class DetailRepositoryImpl(
         }.flowOn(context = Dispatchers.IO)
     }
 
-    override fun getMovieById(movieId: Int): Int {
-        return database.movieDao().getSavedMovieById(movieId)
+    override fun checkMovieById(movieId: Int): Int {
+        return database.movieDao().checkSavedMovieById(movieId)
     }
 
     override fun insertMovie(movieDetail: MovieDetail) {
@@ -53,6 +53,18 @@ class DetailRepositoryImpl(
     }
 
     override fun deleteMovie(movieId: Int) {
-        database.movieDao().deleteArticle(movieId)
+        database.movieDao().deleteMovieDetail(movieId)
+    }
+
+    override fun checkTvShowById(tvShowId: Int): Int {
+        return database.movieDao().checkSavedTvShowById(tvShowId)
+    }
+
+    override fun insertTvShow(tvShowDetail: TvShowDetail) {
+        database.movieDao().insertTvShowDetail(tvShowDetail.toTvShowDetailEntity())
+    }
+
+    override fun deleteTvShow(tvShowId: Int) {
+        database.movieDao().deleteTvShowDetail(tvShowId)
     }
 }

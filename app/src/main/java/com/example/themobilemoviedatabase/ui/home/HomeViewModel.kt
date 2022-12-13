@@ -8,7 +8,7 @@ import com.example.themobilemoviedatabase.data.repository.HomeRepositoryImpl
 import kotlinx.coroutines.flow.*
 
 class HomeViewModel(private val repository: HomeRepositoryImpl) : ViewModel() {
-    private val languageState: MutableStateFlow<String> = MutableStateFlow("en-US")
+    private val languageState: MutableStateFlow<String> = MutableStateFlow("ут")
 
     val popularMovie = languageState.flatMapLatest { language ->
         repository.getPopularMovies(language)
@@ -75,7 +75,7 @@ class HomeViewModel(private val repository: HomeRepositoryImpl) : ViewModel() {
     )
 
     fun setLanguage(language: String) {
-        languageState.tryEmit(language)
+        languageState.value = language
     }
 
     companion object {

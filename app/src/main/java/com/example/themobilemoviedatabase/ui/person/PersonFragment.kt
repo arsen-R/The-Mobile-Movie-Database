@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.RoundedCornersTransformation
@@ -52,9 +53,13 @@ class PersonFragment : Fragment() {
         return binding.root
     }
 
+    private fun getLoadData() {
+        viewModel.setPersonId(personId)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.setPersonId(personId)
+        getLoadData()
         binding.personFilmographyList.popularMovieLabel.isVisible = false
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.person.collectLatest { response ->

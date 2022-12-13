@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.BlurTransformation
@@ -55,12 +56,14 @@ class DetailMovieFragment : Fragment() {
     private val movieId: Int by lazy { arguments?.getInt("film_id") as Int }
     private val movieTitle: String by lazy { arguments?.getString("movieTitle") as String }
 
+    private fun getLoadData() {
+        viewModel.setFilmId(movieId)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).supportActionBar?.title = movieTitle
-
-        viewModel.setFilmId(movieId)
-
+        getLoadData()
         with(binding) {
             viewLifecycleOwner.lifecycleScope.launch {
                 viewModel.movieDetails.collect { response ->
@@ -68,8 +71,10 @@ class DetailMovieFragment : Fragment() {
                         is Resources.Loading -> {
                             binding.progressCircular.isVisible = true
                             binding.nestedScroll.isVisible = false
+                            hideError()
                         }
                         is Resources.Success -> {
+                            hideError()
                             binding.progressCircular.isVisible = false
                             binding.nestedScroll.isVisible = true
                             response.data?.let { movie ->
@@ -98,6 +103,7 @@ class DetailMovieFragment : Fragment() {
                         is Resources.Error -> {
                             binding.progressCircular.isVisible = false
                             binding.nestedScroll.isVisible = false
+                            showError()
                         }
                     }
                 }
@@ -110,14 +116,15 @@ class DetailMovieFragment : Fragment() {
                 )
                 findNavController().navigate(action)
             }
-        checkFavoriteIcon()
+            checkFavoriteIcon()
             shareButton.setOnClickListener { view ->
                 Toast.makeText(view.context, "Share", Toast.LENGTH_LONG).show()
             }
         }
     }
+
     private fun checkFavoriteIcon() {
-        if (viewModel.getMovieById(movieId) == 1) {
+        if (viewModel.checkMovieById(movieId) == 1) {
             binding.favoriteButton.setCompoundDrawablesWithIntrinsicBounds(
                 null,
                 ContextCompat.getDrawable(view?.context!!, R.drawable.ic_round_favorite_24),
@@ -136,9 +143,10 @@ class DetailMovieFragment : Fragment() {
             )
         }
     }
+
     private fun setupFavoriteMovie(movieDetail: MovieDetail) {
         binding.favoriteButton.setOnCheckedChangeListener { _, isChecked ->
-            if (viewModel.getMovieById(movieId) != 1) {
+            if (viewModel.checkMovieById(movieId) != 1) {
                 viewModel.insertMovie(movieDetail)
                 binding.favoriteButton.setCompoundDrawablesWithIntrinsicBounds(
                     null,
@@ -162,6 +170,7 @@ class DetailMovieFragment : Fragment() {
             }
         }
     }
+
     private fun setupMoviePoster(posterPath: String?) {
         binding.movieHeader.moviePoster.load(IMAGE_URL + posterPath) {
             crossfade(true)
@@ -227,6 +236,16 @@ class DetailMovieFragment : Fragment() {
             chip.text = genre[index]?.name
             binding.movieHeader.categoryChipGroup.addView(chip)
         }
+    }
+
+    private fun hideError() {
+        binding.errorMessage.errorMessageImage.isVisible = false
+        binding.errorMessage.errorMessageText.isVisible = false
+    }
+
+    private fun showError() {
+        binding.errorMessage.errorMessageImage.isVisible = true
+        binding.errorMessage.errorMessageText.isVisible = true
     }
 
     override fun onDestroyView() {

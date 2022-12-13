@@ -2,15 +2,15 @@ package com.example.themobilemoviedatabase.ui.episodes.detail
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.themobilemoviedatabase.Application
@@ -23,7 +23,6 @@ import com.example.themobilemoviedatabase.domain.model.TvEpisodeDetails
 import com.example.themobilemoviedatabase.domain.util.Constants.IMAGE_URL
 import com.example.themobilemoviedatabase.ui.adapter.CastAdapter
 import com.example.themobilemoviedatabase.ui.adapter.ImageAdapter
-import com.example.themobilemoviedatabase.ui.details.DetailMovieFragmentDirections
 import kotlinx.coroutines.launch
 
 class TvEpisodeDetailFragment : Fragment() {
@@ -60,12 +59,16 @@ class TvEpisodeDetailFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        Log.d("Fetch Episode Data", "$tvShowId | $seasonNumber | $episodeNumber")
+    private fun getLoadData() {
         viewModel.setFilmId(tvShowId)
         viewModel.setSeasonNumber(seasonNumber)
         viewModel.setEpisodeNumber(episodeNumber)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Log.d("Fetch Episode Data", "$tvShowId | $seasonNumber | $episodeNumber")
+        getLoadData()
 
         setupTvEpisodeViewModel()
         setupTvEpisodeCastViewModel()
@@ -79,10 +82,12 @@ class TvEpisodeDetailFragment : Fragment() {
                     is Resources.Loading -> {
                         binding.progressCircular.isVisible = true
                         binding.nestedScroll.isVisible = false
+                        hideError()
                     }
                     is Resources.Success -> {
                         binding.progressCircular.isVisible = false
                         binding.nestedScroll.isVisible = true
+                        hideError()
                         response.data?.let { episode ->
                             (activity as MainActivity).supportActionBar?.title = episode.name
                             setupEpisodeScreen(episode)
@@ -90,7 +95,8 @@ class TvEpisodeDetailFragment : Fragment() {
                     }
                     is Resources.Error -> {
                         binding.progressCircular.isVisible = false
-                        //binding.nestedScroll.isVisible = false
+                        binding.nestedScroll.isVisible = false
+                        showError()
                     }
                 }
             }
@@ -104,22 +110,26 @@ class TvEpisodeDetailFragment : Fragment() {
                     is Resources.Loading -> {
                         binding.progressCircular.isVisible = true
                         binding.nestedScroll.isVisible = false
+                        hideError()
                     }
                     is Resources.Success -> {
                         binding.progressCircular.isVisible = false
                         binding.nestedScroll.isVisible = true
+                        hideError()
                         response.data?.let { credits ->
                             setupCastRecyclerView(credits.cast)
                         }
                     }
                     is Resources.Error -> {
                         binding.progressCircular.isVisible = false
-                        //binding.nestedScroll.isVisible = false
+                        binding.nestedScroll.isVisible = false
+                        showError()
                     }
                 }
             }
         }
     }
+
     private fun setupTvEpisodeImageViewModel() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.tvEpisodeImage.collect { response ->
@@ -127,10 +137,12 @@ class TvEpisodeDetailFragment : Fragment() {
                     is Resources.Loading -> {
                         binding.progressCircular.isVisible = true
                         binding.nestedScroll.isVisible = false
+                        hideError()
                     }
                     is Resources.Success -> {
                         binding.progressCircular.isVisible = false
                         binding.nestedScroll.isVisible = true
+                        hideError()
                         response.data?.let { image ->
                             setupImageRecyclerView(image.stills)
                         }
@@ -138,11 +150,13 @@ class TvEpisodeDetailFragment : Fragment() {
                     is Resources.Error -> {
                         binding.progressCircular.isVisible = false
                         binding.nestedScroll.isVisible = false
+                        showError()
                     }
                 }
             }
         }
     }
+
     private fun setupEpisodeScreen(episode: TvEpisodeDetails) {
         with(binding) {
             tvEpisodePoster.load(IMAGE_URL + episode.still_path) {
@@ -156,13 +170,23 @@ class TvEpisodeDetailFragment : Fragment() {
                 if (item.job == "Director") {
                     direction += " · ${item.name}"
                 }
-                if(item.job == "Writer") {
+                if (item.job == "Writer") {
                     writers += " · ${item.name}"
                 }
             }
             directorName.text = direction
             writersName.text = writers
         }
+    }
+
+    private fun hideError() {
+        binding.errorMessage?.errorMessageImage?.isVisible = false
+        binding.errorMessage?.errorMessageText?.isVisible = false
+    }
+
+    private fun showError() {
+        binding.errorMessage?.errorMessageImage?.isVisible = true
+        binding.errorMessage?.errorMessageText?.isVisible = true
     }
 
     private fun setupCastRecyclerView(casts: List<Cast>?) {
